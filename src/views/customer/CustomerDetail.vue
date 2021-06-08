@@ -93,11 +93,11 @@
             <el-button
               size="mini"
               type="primary"
-              @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+              @click="liaisonEdit(scope.row.id, scope.row)">编辑</el-button>
             <el-button
               size="mini"
               type="danger"
-              @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+              @click="liaisonDelete(scope.row.id, scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -156,11 +156,11 @@
             <el-button
               size="mini"
               type="primary"
-              @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+              @click="recordEdit(scope.row.id, scope.row)">编辑</el-button>
             <el-button
               size="mini"
               type="danger"
-              @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+              @click="recordDelete(scope.row.id, scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -213,11 +213,11 @@
             <el-button
               size="mini"
               type="primary"
-              @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+              @click="businessEdit(scope.row.id, scope.row)">编辑</el-button>
             <el-button
               size="mini"
               type="danger"
-              @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+              @click="businessDelete(scope.row.id, scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -243,6 +243,7 @@
         // 客户下的联系人信息
         LiaisonList: [
           {
+            id: 1,
             name: '刘锐',
             customer: '山东宝铃自动化设备有限公司',
             phone: '13853309041',
@@ -252,6 +253,7 @@
             user: '耿冠超'
           },
           {
+            id: 2,
             name: '刘锐',
             customer: '山东宝铃自动化设备有限公司',
             phone: '13853309041',
@@ -261,6 +263,7 @@
             user: '耿冠超'
           },
           {
+            id: 3,
             name: '刘锐',
             customer: '山东宝铃自动化设备有限公司',
             phone: '13853309041',
@@ -273,6 +276,7 @@
         // 客户下的拜访记录信息
         RecordList: [
           {
+            id: 1,
             theme: '问客户工控机情况',
             customer: '山东宝铃自动化设备有限公司',
             status: '线上',
@@ -282,6 +286,7 @@
             user: '耿冠超'
           },
           {
+            id: 2,
             theme: '问客户工控机情况',
             customer: '山东宝铃自动化设备有限公司',
             status: '线上',
@@ -291,6 +296,7 @@
             user: '耿冠超'
           },
           {
+            id: 3,
             theme: '问客户工控机情况',
             customer: '山东宝铃自动化设备有限公司',
             status: '线上',
@@ -303,6 +309,7 @@
         // 客户下的商机信息
         BusinessList: [
           {
+            id: 1,
             name: '客户升级设备',
             customer: '山东芙诺鑫智能科技有限公司',
             winning_rate: '20%',
@@ -311,6 +318,7 @@
             user: '耿冠超'
           },
           {
+            id: 2,
             name: '客户升级设备',
             customer: '山东芙诺鑫智能科技有限公司',
             winning_rate: '20%',
@@ -319,6 +327,7 @@
             user: '耿冠超'
           },
           {
+            id: 3,
             name: '客户升级设备',
             customer: '山东芙诺鑫智能科技有限公司',
             winning_rate: '20%',
@@ -327,6 +336,34 @@
             user: '耿冠超'
           }
         ]
+      }
+    },
+    methods: {
+      // 统一列颜色
+      setCellColor ({ row, column, rowIndex, columnIndex }) {
+        if (columnIndex === 0) {
+          return 'color: #3DA2DF; font-weight: bold;'
+        }
+      },
+      // 统一编辑接口
+      liaisonEdit (id, row) {
+        this.$router.push({ name: 'LiaisonEdit', params: { id: id } })
+      },
+      recordEdit (id, row) {
+        this.$router.push({ name: 'RecordEdit', params: { id: id } })
+      },
+      businessEdit (id, row) {
+        this.$router.push({ name: 'BusinessEdit', params: { id: id } })
+      },
+      // 统一删除接口
+      liaisonDelete (id, row) {
+        console.log(id, row)
+      },
+      recordDelete (id, row) {
+        console.log(id, row)
+      },
+      businessDelete (id, row) {
+        console.log(id, row)
       }
     }
   }

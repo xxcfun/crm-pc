@@ -11,26 +11,23 @@
     <!-- 搜索栏 -->
     <el-form :model="SearchForm" ref="SearchForm" :inline="true">
       <el-form-item label="客户名称">
-        <el-input v-model="SearchForm.name" placeholder="请输入内容" :clearable="clearable"></el-input>
+        <el-input v-model="SearchForm.name" placeholder="请输入客户名称" :clearable="clearable"></el-input>
       </el-form-item>
       <el-form-item label="客户级别">
-        <el-select v-model="SearchForm.rank" placeholder="客户级别" :clearable="clearable">
+        <el-select v-model="SearchForm.rank" placeholder="请选择客户级别" :clearable="clearable">
           <el-option label="潜在客户" value="1"></el-option>
           <el-option label="意向客户" value="2"></el-option>
           <el-option label="重点客户" value="3"></el-option>
         </el-select>
       </el-form-item>
-<!--      <el-form-item label="客户规模">-->
-<!--        <el-select v-model="SearchForm.scale" placeholder="客户规模" :clearable="clearable">-->
-<!--          <el-option label="0~10人" value="1"></el-option>-->
-<!--          <el-option label="10~50人" value="2"></el-option>-->
-<!--          <el-option label="50~100人" value="3"></el-option>-->
-<!--          <el-option label="100~1000人" value="4"></el-option>-->
-<!--          <el-option label="1000人以上" value="5"></el-option>-->
-<!--        </el-select>-->
-<!--      </el-form-item>-->
+      <el-form-item label="是否成交">
+        <el-select v-model="SearchForm.is_deal" placeholder="筛选成交/未成交客户" :clearable="clearable">
+          <el-option label="成交" value="1"></el-option>
+          <el-option label="未成交" value="2"></el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item label="客户行业">
-        <el-select v-model="SearchForm.industry" placeholder="客户行业" :clearable="clearable">
+        <el-select v-model="SearchForm.industry" placeholder="请选择客户行业" :clearable="clearable">
           <el-option label="机台设备制造商" value="1"></el-option>
           <el-option label="生产制造型企业" value="2"></el-option>
           <el-option label="系统集成商" value="3"></el-option>
@@ -39,7 +36,7 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" @click="onSubmit">搜索</el-button>
         <el-button icon="el-icon-circle-close" @click="resetForm('SearchForm')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -98,11 +95,11 @@
             <el-button
               size="mini"
               type="primary"
-              @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+              @click="handleEdit(scope.row.id, scope.row)">编辑</el-button>
             <el-button
               size="mini"
               type="danger"
-              @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+              @click="handleDelete(scope.row.id, scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -132,7 +129,7 @@
         SearchForm: {
           name: '',
           rank: '',
-          // scale: '',
+          is_deal: '',
           industry: ''
         },
         // 是否可以清除
@@ -265,6 +262,15 @@
       }
     },
     methods: {
+      // 提交查询
+      onSubmit () {
+        console.log('submit!')
+      },
+      // 重置
+      resetForm (formName) {
+        console.log('reset')
+        this.$refs[formName].resetFields()
+      },
       // 统一列颜色
       setCellColor ({ row, column, rowIndex, columnIndex }) {
         if (columnIndex === 1) {
@@ -279,18 +285,14 @@
         console.log(`当前页: ${val}`)
       },
       // 编辑
-      handleEdit (index, row) {
-        this.$router.push({ name: 'CustomerEdit', params: { id: index } })
+      handleEdit (id, row) {
+        this.$router.push({ name: 'CustomerEdit', params: { id: id } })
       },
       // 删除
-      handleDelete (index, row) {
-        console.log(index, row)
+      handleDelete (id, row) {
+        console.log(id, row)
       },
-      // 重置
-      resetForm (formName) {
-        this.$refs[formName].resetFields()
-      },
-      // 跳转到详情信息页面
+      // 跳转到客户详情信息页面
       goDetail (id) {
         console.log(id)
         this.$router.push({ name: 'CustomerDetail', params: { id: id } })

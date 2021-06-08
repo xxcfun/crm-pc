@@ -17,7 +17,7 @@
         <el-input v-model="SearchForm.customer" placeholder="请输入客户名称" clearable></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" @click="onSubmit">搜索</el-button>
         <el-button icon="el-icon-circle-close" @click="resetForm('SearchForm')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -32,14 +32,18 @@
           type="index">
         </el-table-column>
         <el-table-column
-          prop="name"
           label="联系人姓名"
           width="100">
+          <template slot-scope="scope">
+            <a @click="goLiaisonDetail(scope.row.id)" style="color: #3DA2DF; font-weight: bold;cursor:pointer">{{scope.row.name}}</a>
+          </template>
         </el-table-column>
         <el-table-column
-          prop="customer"
           label="客户名称"
           width="300">
+          <template slot-scope="scope">
+            <a @click="goCustomerDetail(scope.row.id)" style="color: #3DA2DF; font-weight: bold;cursor:pointer">{{scope.row.customer}}</a>
+          </template>
         </el-table-column>
         <el-table-column
           prop="phone"
@@ -74,11 +78,11 @@
             <el-button
               size="mini"
               type="primary"
-              @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+              @click="handleEdit(scope.row.id, scope.row)">编辑</el-button>
             <el-button
               size="mini"
               type="danger"
-              @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+              @click="handleDelete(scope.row.id, scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -112,6 +116,7 @@
         // 表格数据
         LiaisonList: [
           {
+            id: 1,
             name: '刘锐',
             customer: '山东宝铃自动化设备有限公司',
             phone: '13853309041',
@@ -121,6 +126,7 @@
             user: '耿冠超'
           },
           {
+            id: 2,
             name: '刘锐',
             customer: '山东宝铃自动化设备有限公司',
             phone: '13853309041',
@@ -130,6 +136,7 @@
             user: '耿冠超'
           },
           {
+            id: 3,
             name: '刘锐',
             customer: '山东宝铃自动化设备有限公司',
             phone: '13853309041',
@@ -139,6 +146,7 @@
             user: '耿冠超'
           },
           {
+            id: 4,
             name: '刘锐',
             customer: '山东宝铃自动化设备有限公司',
             phone: '13853309041',
@@ -148,6 +156,7 @@
             user: '耿冠超'
           },
           {
+            id: 5,
             name: '刘锐',
             customer: '山东宝铃自动化设备有限公司',
             phone: '13853309041',
@@ -157,6 +166,7 @@
             user: '耿冠超'
           },
           {
+            id: 6,
             name: '刘锐',
             customer: '山东宝铃自动化设备有限公司',
             phone: '13853309041',
@@ -166,6 +176,7 @@
             user: '耿冠超'
           },
           {
+            id: 7,
             name: '刘锐',
             customer: '山东宝铃自动化设备有限公司',
             phone: '13853309041',
@@ -175,6 +186,7 @@
             user: '耿冠超'
           },
           {
+            id: 8,
             name: '刘锐',
             customer: '山东宝铃自动化设备有限公司',
             phone: '13853309041',
@@ -184,6 +196,7 @@
             user: '耿冠超'
           },
           {
+            id: 9,
             name: '刘锐',
             customer: '山东宝铃自动化设备有限公司',
             phone: '13853309041',
@@ -193,6 +206,7 @@
             user: '耿冠超'
           },
           {
+            id: 10,
             name: '刘锐',
             customer: '山东宝铃自动化设备有限公司',
             phone: '13853309041',
@@ -207,6 +221,15 @@
       }
     },
     methods: {
+      // 提交查询
+      onSubmit () {
+        console.log('submit!')
+      },
+      // 重置
+      resetForm (formName) {
+        console.log('reset')
+        this.$refs[formName].resetFields()
+      },
       // 统一列颜色
       setCellColor ({ row, column, rowIndex, columnIndex }) {
         if (columnIndex === 1) {
@@ -221,12 +244,22 @@
         console.log(`当前页: ${val}`)
       },
       // 编辑
-      handleEdit (index, row) {
-        console.log(index, row)
+      handleEdit (id, row) {
+        this.$router.push({ name: 'LiaisonEdit', params: { id: id } })
       },
       // 删除
-      handleDelete (index, row) {
-        console.log(index, row)
+      handleDelete (id, row) {
+        console.log(id, row)
+      },
+      // 跳转到联系人详情信息页面
+      goLiaisonDetail (id) {
+        console.log(id)
+        this.$router.push({ name: 'LiaisonDetail', params: { id: id } })
+      },
+      // 跳转到客户详情信息页面
+      goCustomerDetail (id) {
+        console.log(id)
+        this.$router.push({ name: 'CustomerDetail', params: { id: id } })
       }
     }
   }
