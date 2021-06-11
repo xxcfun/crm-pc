@@ -83,7 +83,7 @@
           width="200">
         </el-table-column>
         <el-table-column
-          prop="user"
+          prop="user.username"
           label="创建人"
           width="100">
         </el-table-column>
@@ -121,6 +121,9 @@
 </template>
 
 <script>
+  import { ajax } from '../../utils/ajax'
+  import { CustomerApis } from '../../utils/api'
+
   export default {
     name: 'Customer',
     data () {
@@ -135,128 +138,7 @@
         // 是否可以清除
         clearable: true,
         // 表格数据
-        CustomerList: [
-          {
-            id: 1,
-            name: '山东津海环保装备有限公司',
-            rank: '潜在客户',
-            is_deal: '未成交',
-            scale: '0~10人',
-            industry: '系统集成商',
-            created_at: '2021年12月25日 08:20',
-            user: '耿冠超'
-          },
-          {
-            id: 2,
-            name: '山东津海环保装备有限公司',
-            rank: '潜在客户',
-            is_deal: '未成交',
-            scale: '0~10人',
-            industry: '系统集成商',
-            created_at: '2021年12月25日 08:20',
-            user: '耿冠超'
-          },
-          {
-            id: 3,
-            name: '山东津海环保装备有限公司',
-            rank: '潜在客户',
-            is_deal: '未成交',
-            scale: '0~10人',
-            industry: '系统集成商',
-            created_at: '2021年12月25日 08:20',
-            user: '耿冠超'
-          },
-          {
-            id: 4,
-            name: '山东津海环保装备有限公司',
-            rank: '潜在客户',
-            is_deal: '未成交',
-            scale: '0~10人',
-            industry: '系统集成商',
-            created_at: '2021年6月2日 08:20',
-            user: '耿冠超'
-          },
-          {
-            id: 5,
-            name: '山东津海环保装备有限公司',
-            rank: '潜在客户',
-            is_deal: '未成交',
-            scale: '0~10人',
-            industry: '系统集成商',
-            created_at: '2021年6月2日 08:20',
-            user: '耿冠超'
-          },
-          {
-            id: 6,
-            name: '山东津海环保装备有限公司',
-            rank: '潜在客户',
-            is_deal: '未成交',
-            scale: '0~10人',
-            industry: '系统集成商',
-            created_at: '2021年6月2日 08:20',
-            user: '耿冠超'
-          },
-          {
-            id: 7,
-            name: '山东津海环保装备有限公司',
-            rank: '潜在客户',
-            is_deal: '未成交',
-            scale: '0~10人',
-            industry: '系统集成商',
-            created_at: '2021年6月2日 08:20',
-            user: '耿冠超'
-          },
-          {
-            id: 8,
-            name: '山东津海环保装备有限公司',
-            rank: '潜在客户',
-            is_deal: '未成交',
-            scale: '0~10人',
-            industry: '系统集成商',
-            created_at: '2021年6月2日 08:20',
-            user: '耿冠超'
-          },
-          {
-            id: 9,
-            name: '山东津海环保装备有限公司',
-            rank: '潜在客户',
-            is_deal: '未成交',
-            scale: '0~10人',
-            industry: '系统集成商',
-            created_at: '2021年6月2日 08:20',
-            user: '耿冠超'
-          },
-          {
-            id: 10,
-            name: '山东津海环保装备有限公司',
-            rank: '潜在客户',
-            is_deal: '未成交',
-            scale: '0~10人',
-            industry: '系统集成商',
-            created_at: '2021年6月2日 08:20',
-            user: '耿冠超'
-          },
-          {
-            id: 11,
-            name: '山东津海环保装备有限公司',
-            rank: '潜在客户',
-            is_deal: '未成交',
-            scale: '0~10人',
-            industry: '系统集成商',
-            created_at: '2021年6月2日 08:20',
-            user: '耿冠超'
-          },
-          {
-            id: 12,
-            name: '山东津海环保装备有限公司',
-            rank: '潜在客户',
-            is_deal: '未成交',
-            scale: '0~10人',
-            industry: '系统集成商',
-            created_at: '2021年6月2日 08:20',
-            user: '耿冠超'
-          }
-        ],
+        CustomerList: [],
         // 分页
         currentPage: 10
       }
@@ -296,7 +178,17 @@
       goDetail (id) {
         console.log(id)
         this.$router.push({ name: 'CustomerDetail', params: { id: id } })
+      },
+      // 获取所有客户列表
+      getCustomerList () {
+        ajax.get(CustomerApis.customerListUrl).then(({ data }) => {
+          this.CustomerList = data.objects
+        })
       }
+    },
+    created () {
+      // 查询接口
+      this.getCustomerList()
     }
   }
 </script>

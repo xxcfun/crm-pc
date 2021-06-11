@@ -226,20 +226,16 @@
 </template>
 
 <script>
+  import { CustomerApis } from '../../utils/api'
+  import { ajax } from '../../utils/ajax'
+
   export default {
     name: 'CustomerDetail',
     data () {
       return {
+        id: '',
         // 客户详细信息
-        CustomerForm: {
-          name: '山东宝铃自动化设备有限公司',
-          rank: '潜在客户',
-          website: '',
-          scale: '0~10人',
-          nature: '有限责任公司',
-          industry: '系统集成商',
-          remarks: ''
-        },
+        CustomerForm: {},
         // 客户下的联系人信息
         LiaisonList: [
           {
@@ -364,7 +360,24 @@
       },
       businessDelete (id, row) {
         console.log(id, row)
+      },
+      // 获取客户详细信息
+      getCustomerDetail () {
+        const url = CustomerApis.customerDetailUrl.replace('#{id}', this.id)
+        ajax.get(url).then(({ data }) => {
+          this.CustomerForm = data
+        })
+      },
+      loadData () {
+        // 获取路由id
+        this.id = this.$route.params.id
+        // 调用接口
+        this.getCustomerDetail()
       }
+    },
+    created () {
+      // 查询接口
+      this.loadData()
     }
   }
 </script>
