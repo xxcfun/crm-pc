@@ -6,6 +6,7 @@ import './plugins/element'
 
 Vue.config.productionTip = false
 
+// 设置路由标题
 router.beforeEach((to, from, next) => {
   if (to.meta.title) {
     document.title = to.meta.title
@@ -13,7 +14,7 @@ router.beforeEach((to, from, next) => {
   next()
 })
 
-new Vue({
+window.app = new Vue({
   router,
   store,
   render: h => h(App)

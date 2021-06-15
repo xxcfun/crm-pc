@@ -15,7 +15,7 @@
       </div>
       <div class="header-icon">
           <span>
-            <el-link icon="el-icon-user" :underline="false">欢迎您，{{admin}}</el-link>
+            <el-link icon="el-icon-user" :underline="false">欢迎您，{{ user.username }}</el-link>
           </span>
         <el-divider direction="vertical"/>
         <span>
@@ -42,8 +42,12 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   // 侧边导航栏菜单
   import AsideMenu from '../components/common/Menu'
+  import { ajax } from '../utils/ajax'
+  import { AccountApis } from '../utils/api'
+  import * as types from '../store/mutation-types'
 
   export default {
     name: 'Home',
@@ -56,10 +60,28 @@
       }
     },
     methods: {
+      // 查询用户信息
+      getUserInfo () {
+        ajax.get(AccountApis.userInfoUrl).then(({ data }) => {
+          console.log('Mine-getUserInfo', data)
+          this.$store.commit(types.UPDATE_USER_INFO, data)
+        })
+      },
+
       // 用户登出
       logout () {
-        window.sessionStorage.clear()
-        this.$router.push('/login')
+        // 调用接口，退出登录
+        ajax.get(AccountApis.logoutUrl).then(() => {
+          // 提示用户
+          this.$message({
+            message: '您已退出登录',
+            type: 'success'
+          })
+          // 删除用户登录的信息
+          this.$store.commit(types.DELETE_USER_INFO)
+          // 跳转到首页去
+          this.$router.push({ name: 'Login' })
+        })
       },
 
       // 菜单折叠展开
@@ -72,6 +94,10 @@
         window.sessionStorage.setItem(activePath, activePath)
         this.activePath = activePath
       }
+    },
+    computed: mapState(['user']),
+    mounted () {
+      this.getUserInfo()
     }
   }
 </script>

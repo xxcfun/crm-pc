@@ -20,6 +20,7 @@ import RecordEdit from '../views/record/RecordEdit'
 import BusinessAdd from '../views/business/BusinessAdd'
 import BusinessDetail from '../views/business/BusinessDetail'
 import BusinessEdit from '../views/business/BusinessEdit'
+import Login from '../views/account/Login'
 
 Vue.use(VueRouter)
 
@@ -28,7 +29,7 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
-    redirect: 'Data',
+    redirect: 'data',
     meta: {
       title: '济南控创电子科技有限公司客户关系管理系统'
     },
@@ -192,6 +193,14 @@ const routes = [
         }
       }
     ]
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    meta: {
+      title: '登录济南控创电子科技有限公司客户关系管理系统'
+    }
   }
 ]
 
