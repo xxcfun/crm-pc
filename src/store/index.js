@@ -1,32 +1,25 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import * as types from './mutation-types'
+import * as actions from './actions'
+import * as getters from './getters'
+import mutations from './mutations'
 
 Vue.use(Vuex)
 
+import cookie from '../utils/cookie'
+
+const userInfo = {
+  name: cookie.getCookie('name') || '',
+  token: cookie.getCookie('token') || ''
+}
+
+const state = {
+  userInfo
+}
+
 export default new Vuex.Store({
-  state: {
-    user: {
-    }
-  },
-  mutations: {
-    /**
-     * 设置用户信息
-     * @param state
-     * @param user
-     */
-    [types.UPDATE_USER_INFO] (state, { user }) {
-      state.user = {
-        ...state.user,
-        ...user
-      }
-    },
-    [types.DELETE_USER_INFO] (state) {
-      state.user = {}
-    }
-  },
-  actions: {
-  },
-  modules: {
-  }
+  state,
+  mutations,
+  actions,
+  getters
 })

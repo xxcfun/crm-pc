@@ -32,9 +32,9 @@
 </template>
 
 <script>
-  import { ajax } from '../../utils/ajax'
+  import cookie from '../../utils/cookie'
   import { AccountApis } from '../../utils/api'
-  import * as types from '../../store/mutation-types'
+  import axios from 'axios'
 
   export default {
     name: 'Login',
@@ -123,17 +123,22 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             // 调用接口
-            ajax.post(AccountApis.loginUrl, {
+            axios.post(AccountApis.loginUrl, {
               username: this.loginForm.username,
               password: this.loginForm.password
             }).then(({ data }) => {
+              console.log(data)
+              console.log(this.loginForm.username)
               // 拿取用户信息，存储到vuex
-              this.$store.commit(types.UPDATE_USER_INFO, data)
+              cookie.setCookie('name', this.loginForm.username, 7)
+              cookie.setCookie('token', data.token, 7)
+              // 更新store数据
+              this.$store.dispatch('setInfo')
               this.$message({
                 message: '登录成功',
                 type: 'success'
               })
-              this.$router.replace({ name: 'Home' })
+              this.$router.push({ name: 'Home' })
             }).catch(({ response: { data } }) => {
               // 如果有问题，需要给用户提示异常信息
               console.log(data)
@@ -147,6 +152,14 @@
       resetForm (formName) {
         this.$refs[formName].resetFields()
       }
+    },
+    created () {
+      // 清除缓存
+      cookie.delCookie('token')
+      cookie.delCookie('name')
+      // 重新触发store
+      // 更新store数据
+      this.$store.dispatch('setInfo')
     }
   }
 </script>

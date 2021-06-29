@@ -227,7 +227,7 @@
 
 <script>
   import { CustomerApis } from '../../utils/api'
-  import { ajax } from '../../utils/ajax'
+  import axios from 'axios'
 
   export default {
     name: 'CustomerDetail',
@@ -364,7 +364,7 @@
       // 获取客户详细信息
       getCustomerDetail () {
         const url = CustomerApis.customerDetailUrl.replace('#{id}', this.id)
-        ajax.get(url).then(({ data }) => {
+        axios.get(url).then(({ data }) => {
           this.CustomerForm = data
         })
       },

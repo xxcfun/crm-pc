@@ -4,15 +4,17 @@ const apiHost = 'http://localhost:8080/api'
 
 /* 用户相关接口 */
 const AccountApis = {
-  loginUrl: apiHost + '/account/user/login/',
-  logoutUrl: apiHost + '/account/user/logout/',
-  userInfoUrl: apiHost + '/account/user/info/'
+  loginUrl: apiHost + '/account/login/',
+  userInfoUrl: apiHost + '/account/login/'
 }
 
 /* 客户相关接口 */
 const CustomerApis = {
-  customerListUrl: apiHost + '/customer/customer/list/',
-  customerDetailUrl: apiHost + '/customer/customer/detail/#{id}/'
+  customerListUrl: apiHost + '/customer/customer/',
+  customerDetailUrl: apiHost + '/customer/customer/#{id}/',
+  customerEditUrl: apiHost + '/customer/customer/#{id}/',
+  customerDeleteUrl: apiHost + '/customer/customer/#{id}/',
+  customerCreateUrl: apiHost + '/customer/customer/'
 }
 /* 联系人相关接口 */
 /* 拜访记录相关接口 */

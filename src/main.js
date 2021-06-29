@@ -3,6 +3,10 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './plugins/element'
+// 全局加载resource拦截器
+import './utils/axios'
+import Axios from 'axios'
+Vue.prototype.$http = Axios
 
 Vue.config.productionTip = false
 

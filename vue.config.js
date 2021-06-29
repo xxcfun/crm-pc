@@ -1,4 +1,6 @@
 module.exports = {
+  // 关闭语法检测
+  lintOnSave: false,
   // vue.js里解决跨域问题
   devServer: {
     proxy: {

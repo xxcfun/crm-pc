@@ -9,13 +9,14 @@ import {
   Form,
   FormItem,
   Header,
-  Input, Link,
+  Input, Link, Loading,
   Main,
   Menu,
   MenuItem, Message, MessageBox, Option, PageHeader, Pagination, Radio, RadioGroup, Row, Select,
   Submenu, Switch, Table, TableColumn, TabPane, Tabs, Tag, Tooltip
 } from 'element-ui'
 
+Vue.use(Loading.directive)
 Vue.use(Radio)
 Vue.use(RadioGroup)
 Vue.use(Autocomplete)

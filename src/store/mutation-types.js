@@ -1,4 +1,2 @@
-// 修改用户信息
-export const UPDATE_USER_INFO = 'updateUserInfo'
-// 删除用户信息
-export const DELETE_USER_INFO = 'deleteUserInfo'
+// 使用常量替代mutation事件类型。
+export const SET_INFO = 'SET_INFO';

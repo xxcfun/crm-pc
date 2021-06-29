@@ -48,7 +48,7 @@
         </el-table-column>
         <el-table-column
           label="客户名称"
-          width="300">
+          width="350">
           <template slot-scope="scope">
             <a @click="goCustomerDetail(scope.row.id)" style="color: #3DA2DF; font-weight: bold;cursor:pointer">{{scope.row.customer}}</a>
           </template>
@@ -56,7 +56,7 @@
         <el-table-column
           prop="winning_rate"
           label="赢单率"
-          width="100">
+          width="150">
         </el-table-column>
         <el-table-column
           prop="money"
@@ -67,11 +67,6 @@
           prop="created_at"
           label="创建时间"
           width="200">
-        </el-table-column>
-        <el-table-column
-          prop="user"
-          label="创建人"
-          width="100">
         </el-table-column>
         <el-table-column
           fixed="right"
