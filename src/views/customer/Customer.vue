@@ -182,7 +182,7 @@
       },
       // 编辑
       handleEdit (id) {
-        this.$router.push({ name: 'CustomerEdit', params: { id: id } })
+        this.$router.push({ name: 'CustomerDetail', params: { id: id } })
       },
       // 删除
       handleDelete (id, row) {
@@ -211,7 +211,6 @@
       },
       // 跳转到客户详情信息页面
       goDetail (id) {
-        console.log(id)
         this.$router.push({ name: 'CustomerDetail', params: { id: id } })
       },
       // 获取所有客户列表
@@ -219,6 +218,7 @@
         this.loading = true
         axios.get(CustomerApis.customerListUrl, {
           params: {
+            page_size: this.pageSize,
             page: this.currentPage,
             name: this.searchForm.name,
             rank: this.searchForm.rank,

@@ -31,7 +31,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="公司网址" prop="website">
-        <el-input v-model="CustomerForm.website"></el-input>
+        <el-input v-model="CustomerForm.website" clearable></el-input>
       </el-form-item>
       <el-form-item label="客户规模" prop="scale">
         <el-select v-model="CustomerForm.scale" placeholder="客户规模" clearable>
@@ -65,7 +65,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="备注信息" prop="remarks">
-        <el-input type="textarea" v-model="CustomerForm.remarks"></el-input>
+        <el-input type="textarea" v-model="CustomerForm.remarks" clearable></el-input>
       </el-form-item>
 
       <el-form-item>
@@ -77,7 +77,6 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
   import axios from 'axios'
   import { CustomerApis } from '../../utils/api'
 
@@ -121,12 +120,11 @@
         }
       }
     },
-    computed: mapState(['user']),
     methods: {
       submitForm (formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            axios.post(CustomerApis.customerCreateUrl, {
+            axios.post(CustomerApis.customerListUrl, {
               name: this.CustomerForm.name,
               rank: this.CustomerForm.rank,
               is_deal: this.CustomerForm.is_deal,
@@ -136,7 +134,6 @@
               industry: this.CustomerForm.industry,
               remarks: this.CustomerForm.remarks
             }).then(({ data }) => {
-              console.log(data)
               this.$message({
                 message: '添加成功',
                 type: 'success'

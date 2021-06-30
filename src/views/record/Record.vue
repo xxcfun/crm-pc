@@ -9,22 +9,23 @@
     <el-divider></el-divider>
 
     <!-- 搜索栏 -->
-    <el-form :model="SearchForm" ref="SearchForm" :inline="true">
-      <el-form-item label="拜访主题">
-        <el-input v-model="SearchForm.theme" placeholder="请输入拜访主题" :clearable="clearable"></el-input>
+    <el-form :model="searchForm" ref="searchForm" :inline="true">
+      <el-form-item label="拜访主题" prop="name">
+        <el-input v-model="searchForm.theme" placeholder="请输入拜访主题" clearable></el-input>
       </el-form-item>
-      <el-form-item label="客户名称">
-        <el-input v-model="SearchForm.customer" placeholder="请输入客户名称" :clearable="clearable"></el-input>
+      <el-form-item label="客户名称" prop="customer">
+        <el-input v-model="searchForm.customer" placeholder="请输入客户名称" clearable></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="onSubmit">搜索</el-button>
-        <el-button icon="el-icon-circle-close" @click="resetForm('SearchForm')">重置</el-button>
+        <el-button icon="el-icon-circle-close" @click="resetForm('searchForm')">重置</el-button>
       </el-form-item>
     </el-form>
 
     <!-- 表格 -->
     <template>
       <el-table
+        v-loading="loading"
         :data="RecordList"
         style="width: 100%"
         :cell-style="setCellColor">
@@ -42,7 +43,7 @@
           label="客户名称"
           width="350">
           <template slot-scope="scope">
-            <a @click="goCustomerDetail(scope.row.id)" style="color: #3DA2DF; font-weight: bold;cursor:pointer">{{scope.row.customer}}</a>
+            <a @click="goCustomerDetail(scope.row.customer.id)" style="color: #3DA2DF; font-weight: bold;cursor:pointer">{{scope.row.customer.name}}</a>
           </template>
         </el-table-column>
         <el-table-column
@@ -89,148 +90,57 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="100"
+        :page-sizes="[10, 20, 50, 100]"
+        :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400">
+        :total="total">
       </el-pagination>
     </div>
   </div>
 </template>
 
 <script>
+  import axios from 'axios'
+  import { RecordApis } from '../../utils/api'
+
   export default {
     name: 'Record',
     data () {
       return {
         // 搜索数据
-        SearchForm: {
+        searchForm: {
           theme: '',
           customer: ''
         },
-        // 是否可以清除
-        clearable: true,
         // 表格数据
-        RecordList: [
-          {
-            id: 1,
-            theme: '问客户工控机情况',
-            customer: '山东宝铃自动化设备有限公司',
-            status: '线上',
-            main: '一直用工控机，从北京那边买的',
-            next: '去淄博路过拜访一下客户，多了解',
-            created_at: '2021年6月2日 18:06',
-            user: '耿冠超'
-          },
-          {
-            id: 2,
-            theme: '问客户工控机情况',
-            customer: '山东宝铃自动化设备有限公司',
-            status: '线上',
-            main: '一直用工控机，从北京那边买的',
-            next: '去淄博路过拜访一下客户，多了解',
-            created_at: '2021年6月2日 18:06',
-            user: '耿冠超'
-          },
-          {
-            id: 3,
-            theme: '问客户工控机情况',
-            customer: '山东宝铃自动化设备有限公司',
-            status: '线上',
-            main: '一直用工控机，从北京那边买的',
-            next: '去淄博路过拜访一下客户，多了解',
-            created_at: '2021年6月2日 18:06',
-            user: '耿冠超'
-          },
-          {
-            id: 4,
-            theme: '问客户工控机情况',
-            customer: '山东宝铃自动化设备有限公司',
-            status: '线上',
-            main: '一直用工控机，从北京那边买的',
-            next: '去淄博路过拜访一下客户，多了解',
-            created_at: '2021年6月2日 18:06',
-            user: '耿冠超'
-          },
-          {
-
-            id: 5,
-            theme: '问客户工控机情况',
-            customer: '山东宝铃自动化设备有限公司',
-            status: '线上',
-            main: '一直用工控机，从北京那边买的',
-            next: '去淄博路过拜访一下客户，多了解',
-            created_at: '2021年6月2日 18:06',
-            user: '耿冠超'
-          },
-          {
-
-            id: 6,
-            theme: '问客户工控机情况',
-            customer: '山东宝铃自动化设备有限公司',
-            status: '线上',
-            main: '一直用工控机，从北京那边买的',
-            next: '去淄博路过拜访一下客户，多了解',
-            created_at: '2021年6月2日 18:06',
-            user: '耿冠超'
-          },
-          {
-
-            id: 7,
-            theme: '问客户工控机情况',
-            customer: '山东宝铃自动化设备有限公司',
-            status: '线上',
-            main: '一直用工控机，从北京那边买的',
-            next: '去淄博路过拜访一下客户，多了解',
-            created_at: '2021年6月2日 18:06',
-            user: '耿冠超'
-          },
-          {
-
-            id: 8,
-            theme: '问客户工控机情况',
-            customer: '山东宝铃自动化设备有限公司',
-            status: '线上',
-            main: '一直用工控机，从北京那边买的',
-            next: '去淄博路过拜访一下客户，多了解',
-            created_at: '2021年6月2日 18:06',
-            user: '耿冠超'
-          },
-          {
-
-            id: 9,
-            theme: '问客户工控机情况',
-            customer: '山东宝铃自动化设备有限公司',
-            status: '线上',
-            main: '一直用工控机，从北京那边买的',
-            next: '去淄博路过拜访一下客户，多了解',
-            created_at: '2021年6月2日 18:06',
-            user: '耿冠超'
-          },
-          {
-            id: 10,
-            theme: '问客户工控机情况',
-            customer: '山东宝铃自动化设备有限公司',
-            status: '线上',
-            main: '一直用工控机，从北京那边买的',
-            next: '去淄博路过拜访一下客户，多了解',
-            created_at: '2021年6月2日 18:06',
-            user: '耿冠超'
-          }
-        ],
-        // 分页
-        currentPage: 10
+        RecordList: [],
+        // 是否加载
+        loading: true,
+        // 当前页码
+        currentPage: 1,
+        // 总记录数
+        total: 0,
+        // 每页大小
+        pageSize: 10
       }
     },
     methods: {
       // 提交查询
       onSubmit () {
-        console.log('submit!')
+        // 重置数据
+        this.RecordList = []
+        this.currentPage = 1
+        // 执行查询
+        this.getRecordList()
       },
       // 重置
       resetForm (formName) {
-        console.log('reset')
         this.$refs[formName].resetFields()
+        // 重置页面数据
+        this.RecordList = []
+        this.currentPage = 1
+        // 重置完成后，重新调用接口
+        this.getRecordList()
       },
       // 统一列颜色
       setCellColor ({ row, column, rowIndex, columnIndex }) {
@@ -241,28 +151,71 @@
       // 分页
       handleSizeChange (val) {
         console.log(`每页 ${val} 条`)
+        this.pageSize = val
+        this.getRecordList()
       },
       handleCurrentChange (val) {
         console.log(`当前页: ${val}`)
+        this.currentPage = val
+        this.getRecordList()
       },
       // 编辑
       handleEdit (id, row) {
-        this.$router.push({ name: 'RecordEdit', params: { id: id } })
+        this.$router.push({ name: 'RecordDetail', params: { id: id } })
       },
       // 删除
       handleDelete (id, row) {
-        console.log(id, row)
+        this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const url = RecordApis.recordDetailUrl.replace('#{id}', id)
+          axios.delete(url).then(({ data }) => {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+            // 删除成功，再次查询一次接口
+            this.getRecordList()
+          }).catch(function (error) {
+            console.log(error)
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
       },
       // 跳转到拜访记录详情信息页面
       goRecordDetail (id) {
-        console.log(id)
-        this.$router.push({ name: 'RecordEdit', params: { id: id } })
+        this.$router.push({ name: 'RecordDetail', params: { id: id } })
       },
       // 跳转到客户详情信息页面
       goCustomerDetail (id) {
-        console.log(id)
         this.$router.push({ name: 'CustomerDetail', params: { id: id } })
+      },
+      // 获取所有拜访记录列表
+      getRecordList () {
+        this.loading = true
+        axios.get(RecordApis.recordListUrl, {
+          params: {
+            page_size: this.pageSize,
+            page: this.currentPage,
+            theme: this.searchForm.theme,
+            customer: this.searchForm.customer
+          }
+        }).then(({ data }) => {
+          this.RecordList = data.results
+          this.total = data.count
+          this.loading = false
+        })
       }
+    },
+    created () {
+      // 查询接口
+      this.getRecordList()
     }
   }
 </script>

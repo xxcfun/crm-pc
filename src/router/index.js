@@ -10,16 +10,12 @@ import Business from '../views/business/Business'
 import Okr from '../views/okr/Okr'
 import CustomerDetail from '../views/customer/CustomerDetail'
 import CustomerAdd from '../views/customer/CustomerAdd'
-import CustomerEdit from '../views/customer/CustomerEdit'
 import LiaisonAdd from '../views/liaison/LiaisonAdd'
 import LiaisonDetail from '../views/liaison/LiaisonDetail'
-import LiaisonEdit from '../views/liaison/LiaisonEdit'
 import RecordAdd from '../views/record/RecordAdd'
 import RecordDetail from '../views/record/RecordDetail'
-import RecordEdit from '../views/record/RecordEdit'
 import BusinessAdd from '../views/business/BusinessAdd'
 import BusinessDetail from '../views/business/BusinessDetail'
-import BusinessEdit from '../views/business/BusinessEdit'
 import Login from '../views/account/Login'
 
 Vue.use(VueRouter)
@@ -85,14 +81,6 @@ const routes = [
           title: 'CRM-客户详情'
         }
       },
-      {
-        path: '/customer/edit/:id',
-        name: 'CustomerEdit',
-        component: CustomerEdit,
-        meta: {
-          title: 'CRM-编辑客户'
-        }
-      },
       // 联系人模块
       {
         path: '/liaison',
@@ -116,14 +104,6 @@ const routes = [
         component: LiaisonDetail,
         meta: {
           title: 'CRM-联系人详情'
-        }
-      },
-      {
-        path: '/liaison/edit/:id',
-        name: 'LiaisonEdit',
-        component: LiaisonEdit,
-        meta: {
-          title: 'CRM-编辑联系人'
         }
       },
       // 拜访记录模块
@@ -151,14 +131,6 @@ const routes = [
           title: 'CRM-拜访记录详情'
         }
       },
-      {
-        path: '/record/edit/:id',
-        name: 'RecordEdit',
-        component: RecordEdit,
-        meta: {
-          title: 'CRM-编辑拜访记录'
-        }
-      },
       // 商机模块
       {
         path: '/business',
@@ -182,14 +154,6 @@ const routes = [
         component: BusinessDetail,
         meta: {
           title: 'CRM-商机详情'
-        }
-      },
-      {
-        path: '/business/edit/:id',
-        name: 'BusinessEdit',
-        component: BusinessEdit,
-        meta: {
-          title: 'CRM-修改商机'
         }
       }
     ]
