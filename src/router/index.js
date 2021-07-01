@@ -17,6 +17,9 @@ import RecordDetail from '../views/record/RecordDetail'
 import BusinessAdd from '../views/business/BusinessAdd'
 import BusinessDetail from '../views/business/BusinessDetail'
 import Login from '../views/account/Login'
+import AddLiaison from '../views/customer/AddLiaison'
+import AddRecord from '../views/customer/AddRecord'
+import AddBusiness from '../views/customer/AddBusiness'
 
 Vue.use(VueRouter)
 
@@ -79,6 +82,30 @@ const routes = [
         component: CustomerDetail,
         meta: {
           title: 'CRM-客户详情'
+        }
+      },
+      {
+        path: '/liaison/add/:id',
+        name: 'AddLiaison',
+        component: AddLiaison,
+        meta: {
+          title: 'CRM-添加联系人'
+        }
+      },
+      {
+        path: '/record/add/:id',
+        name: 'AddRecord',
+        component: AddRecord,
+        meta: {
+          title: 'CRM-添加拜访记录'
+        }
+      },
+      {
+        path: '/business/add/:id',
+        name: 'AddBusiness',
+        component: AddBusiness,
+        meta: {
+          title: 'CRM-添加商机'
         }
       },
       // 联系人模块

@@ -78,7 +78,13 @@
 
     <!-- 该客户下的联系人信息 -->
     <div class="hr">
-      联系人信息：
+      <div>联系人信息：</div>
+      <div class="add-button">
+        <el-button
+          size="mini"
+          type="primary"
+          @click="goAddLiaison(id)">添加新的联系人</el-button>
+      </div>
     </div>
     <template>
       <el-table
@@ -86,40 +92,29 @@
         style="width: 100%"
         :cell-style="setCellColor">
         <el-table-column
-          fixed="fixed"
           prop="name"
           label="联系人姓名"
-          width="100">
-        </el-table-column>
-        <el-table-column
-          prop="customer"
-          label="客户名称"
-          width="300">
+          width="">
         </el-table-column>
         <el-table-column
           prop="phone"
           label="联系方式"
-          width="150">
+          width="">
         </el-table-column>
         <el-table-column
           prop="job"
           label="职位"
-          width="100">
+          width="">
         </el-table-column>
         <el-table-column
           prop="injob"
           label="是否在职"
-          width="100">
+          width="">
         </el-table-column>
         <el-table-column
           prop="created_at"
           label="创建时间"
           width="200">
-        </el-table-column>
-        <el-table-column
-          prop="user"
-          label="创建人"
-          width="100">
         </el-table-column>
         <el-table-column
           fixed="right"
@@ -141,7 +136,13 @@
 
     <!-- 该客户下的拜访记录信息 -->
     <div class="hr">
-      拜访记录信息：
+      <div>拜访记录信息：</div>
+      <div class="add-button">
+        <el-button
+          size="mini"
+          type="primary"
+          @click="goAddRecord(id)">添加新的拜访记录</el-button>
+      </div>
     </div>
     <template>
       <el-table
@@ -152,12 +153,7 @@
           fixed="fixed"
           prop="theme"
           label="拜访主题"
-          width="300">
-        </el-table-column>
-        <el-table-column
-          prop="customer"
-          label="客户名称"
-          width="300">
+          width="250">
         </el-table-column>
         <el-table-column
           prop="status"
@@ -167,22 +163,19 @@
         <el-table-column
           prop="main"
           label="主要事宜"
-          width="500">
+          min-width="200"
+          width="600">
         </el-table-column>
         <el-table-column
           prop="next"
           label="后续工作安排"
-          width="500">
+          min-width="200"
+          width="600">
         </el-table-column>
         <el-table-column
           prop="created_at"
           label="创建时间"
           width="200">
-        </el-table-column>
-        <el-table-column
-          prop="user"
-          label="创建人"
-          width="100">
         </el-table-column>
         <el-table-column
           fixed="right"
@@ -204,7 +197,13 @@
 
     <!-- 该客户下的商机信息 -->
     <div class="hr">
-      商机信息：
+      <div>商机信息：</div>
+      <div class="add-button">
+        <el-button
+          size="mini"
+          type="primary"
+          @click="goAddBusiness(id)">添加新的商机</el-button>
+      </div>
     </div>
     <template>
       <el-table
@@ -214,32 +213,22 @@
         <el-table-column
           prop="name"
           label="商机名称"
-          width="200">
-        </el-table-column>
-        <el-table-column
-          prop="customer"
-          label="客户名称"
-          width="300">
+          width="">
         </el-table-column>
         <el-table-column
           prop="winning_rate"
           label="赢单率"
-          width="100">
+          width="">
         </el-table-column>
         <el-table-column
           prop="money"
-          label="预估金额"
-          width="150">
+          label="预估金额（万元）"
+          width="">
         </el-table-column>
         <el-table-column
           prop="created_at"
           label="创建时间"
           width="200">
-        </el-table-column>
-        <el-table-column
-          prop="user"
-          label="创建人"
-          width="100">
         </el-table-column>
         <el-table-column
           fixed="right"
@@ -262,7 +251,7 @@
 </template>
 
 <script>
-  import { CustomerApis } from '../../utils/api'
+  import { BusinessApis, CustomerApis, LiaisonApis, RecordApis } from '../../utils/api'
   import axios from 'axios'
 
   export default {
@@ -282,101 +271,11 @@
           remarks: ''
         },
         // 客户下的联系人信息
-        LiaisonList: [
-          {
-            id: 1,
-            name: '刘锐',
-            customer: '山东宝铃自动化设备有限公司',
-            phone: '13853309041',
-            job: '经理',
-            injob: '在职',
-            created_at: '2021年6月2日 18:03',
-            user: '耿冠超'
-          },
-          {
-            id: 2,
-            name: '刘锐',
-            customer: '山东宝铃自动化设备有限公司',
-            phone: '13853309041',
-            job: '经理',
-            injob: '在职',
-            created_at: '2021年6月2日 18:03',
-            user: '耿冠超'
-          },
-          {
-            id: 3,
-            name: '刘锐',
-            customer: '山东宝铃自动化设备有限公司',
-            phone: '13853309041',
-            job: '经理',
-            injob: '在职',
-            created_at: '2021年6月2日 18:03',
-            user: '耿冠超'
-          }
-        ],
+        LiaisonList: [],
         // 客户下的拜访记录信息
-        RecordList: [
-          {
-            id: 1,
-            theme: '问客户工控机情况',
-            customer: '山东宝铃自动化设备有限公司',
-            status: '线上',
-            main: '一直用工控机，从北京那边买的',
-            next: '去淄博路过拜访一下客户，多了解',
-            created_at: '2021年6月2日 18:06',
-            user: '耿冠超'
-          },
-          {
-            id: 2,
-            theme: '问客户工控机情况',
-            customer: '山东宝铃自动化设备有限公司',
-            status: '线上',
-            main: '一直用工控机，从北京那边买的',
-            next: '去淄博路过拜访一下客户，多了解',
-            created_at: '2021年6月2日 18:06',
-            user: '耿冠超'
-          },
-          {
-            id: 3,
-            theme: '问客户工控机情况',
-            customer: '山东宝铃自动化设备有限公司',
-            status: '线上',
-            main: '一直用工控机，从北京那边买的',
-            next: '去淄博路过拜访一下客户，多了解',
-            created_at: '2021年6月2日 18:06',
-            user: '耿冠超'
-          }
-        ],
+        RecordList: [],
         // 客户下的商机信息
-        BusinessList: [
-          {
-            id: 1,
-            name: '客户升级设备',
-            customer: '山东芙诺鑫智能科技有限公司',
-            winning_rate: '20%',
-            money: '无信息',
-            created_at: '2021年6月2日 17:52',
-            user: '耿冠超'
-          },
-          {
-            id: 2,
-            name: '客户升级设备',
-            customer: '山东芙诺鑫智能科技有限公司',
-            winning_rate: '20%',
-            money: '无信息',
-            created_at: '2021年6月2日 17:52',
-            user: '耿冠超'
-          },
-          {
-            id: 3,
-            name: '客户升级设备',
-            customer: '山东芙诺鑫智能科技有限公司',
-            winning_rate: '20%',
-            money: '无信息',
-            created_at: '2021年6月2日 17:52',
-            user: '耿冠超'
-          }
-        ]
+        BusinessList: []
       }
     },
     methods: {
@@ -423,31 +322,108 @@
       },
       // 统一编辑接口
       liaisonEdit (id, row) {
-        this.$router.push({ name: 'LiaisonEdit', params: { id: id } })
+        this.$router.push({ name: 'LiaisonDetail', params: { id: id } })
       },
       recordEdit (id, row) {
-        this.$router.push({ name: 'RecordEdit', params: { id: id } })
+        this.$router.push({ name: 'RecordDetail', params: { id: id } })
       },
       businessEdit (id, row) {
-        this.$router.push({ name: 'BusinessEdit', params: { id: id } })
+        this.$router.push({ name: 'BusinessDetail', params: { id: id } })
       },
       // 统一删除接口
       liaisonDelete (id, row) {
-        console.log(id, row)
+        this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const url = LiaisonApis.liaisonDetailUrl.replace('#{id}', id)
+          axios.delete(url).then(({ data }) => {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+            // 删除成功，再次查询一次接口
+            this.getCustomerDetail()
+          }).catch(function (error) {
+            console.log(error)
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
       },
       recordDelete (id, row) {
-        console.log(id, row)
+        this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const url = RecordApis.recordDetailUrl.replace('#{id}', id)
+          axios.delete(url).then(({ data }) => {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+            // 删除成功，再次查询一次接口
+            this.getCustomerDetail()
+          }).catch(function (error) {
+            console.log(error)
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
       },
       businessDelete (id, row) {
-        console.log(id, row)
+        this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const url = BusinessApis.businessDetailUrl.replace('#{id}', id)
+          axios.delete(url).then(({ data }) => {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+            // 删除成功，再次查询一次接口
+            this.getCustomerDetail()
+          }).catch(function (error) {
+            console.log(error)
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+      },
+      // 统一跳转添加接口
+      goAddLiaison(id) {
+        this.$router.push({ name: 'AddLiaison', params: { id: id } })
+      },
+      goAddRecord(id) {
+        this.$router.push({ name: 'AddRecord', params: { id: id } })
+      },
+      goAddBusiness(id) {
+        this.$router.push({ name: 'AddBusiness', params: { id: id } })
       },
       // 获取客户详细信息
       getCustomerDetail () {
         const url = CustomerApis.customerDetailUrl.replace('#{id}', this.id)
         axios.get(url).then(({ data }) => {
           this.CustomerForm = data
+          this.LiaisonList = data.liaison
+          this.RecordList = data.record
+          this.BusinessList = data.business
         })
       },
+      // 加载数据
       loadData () {
         // 获取路由id
         this.id = this.$route.params.id
@@ -470,6 +446,8 @@
       color: #3DA2DF;
       font-weight: bold;
       background-color: #ffffff;
+      display: flex;
+      justify-content: space-between;
     }
   }
 </style>

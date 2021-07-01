@@ -54,12 +54,14 @@
         <el-table-column
           prop="main"
           label="主要事宜"
-          width="500">
+          min-width="200"
+          width="600">
         </el-table-column>
         <el-table-column
           prop="next"
           label="后续工作安排"
-          width="500">
+          min-width="200"
+          width="600">
         </el-table-column>
         <el-table-column
           prop="created_at"
