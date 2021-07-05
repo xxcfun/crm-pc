@@ -21,7 +21,10 @@
         <el-input v-model="RecordForm.customer.name" readonly></el-input>
       </el-form-item>
       <el-form-item label="拜访方式" prop="status">
-        <el-input v-model="RecordForm.status" clearable></el-input>
+        <el-radio-group v-model="RecordForm.status">
+          <el-radio :label=1>线上</el-radio>
+          <el-radio :label=2>线下</el-radio>
+        </el-radio-group>
       </el-form-item>
       <el-form-item label="主要事宜" prop="main">
         <el-input type="textarea" v-model="RecordForm.main" clearable></el-input>

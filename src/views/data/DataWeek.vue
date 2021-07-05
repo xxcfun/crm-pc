@@ -218,131 +218,13 @@
         // 是否可以清除
         clearable: true,
         // 客户列表
-        CustomerList: [
-          {
-            id: 1,
-            name: '山东津海环保装备有限公司',
-            rank: '一般客户',
-            scale: '0~10人',
-            industry: '系统集成商',
-            created_at: '2021年12月25日 08:20',
-            user: '耿冠超'
-          },
-          {
-            id: 2,
-            name: '山东津海环保装备有限公司',
-            rank: '一般客户',
-            scale: '0~10人',
-            industry: '系统集成商',
-            created_at: '2021年12月25日 08:20',
-            user: '耿冠超'
-          },
-          {
-            id: 3,
-            name: '山东津海环保装备有限公司',
-            rank: '一般客户',
-            scale: '0~10人',
-            industry: '系统集成商',
-            created_at: '2021年12月25日 08:20',
-            user: '耿冠超'
-          },
-          {
-            id: 4,
-            name: '山东津海环保装备有限公司',
-            rank: '一般客户',
-            scale: '0~10人',
-            industry: '系统集成商',
-            created_at: '2021年6月2日 08:20',
-            user: '耿冠超'
-          },
-          {
-            id: 5,
-            name: '山东津海环保装备有限公司',
-            rank: '一般客户',
-            scale: '0~10人',
-            industry: '系统集成商',
-            created_at: '2021年6月2日 08:20',
-            user: '耿冠超'
-          },
-          {
-            id: 6,
-            name: '山东津海环保装备有限公司',
-            rank: '一般客户',
-            scale: '0~10人',
-            industry: '系统集成商',
-            created_at: '2021年6月2日 08:20',
-            user: '耿冠超'
-          },
-          {
-            id: 7,
-            name: '山东津海环保装备有限公司',
-            rank: '一般客户',
-            scale: '0~10人',
-            industry: '系统集成商',
-            created_at: '2021年6月2日 08:20',
-            user: '耿冠超'
-          }
-        ],
+        CustomerList: [],
         // 联系人列表
-        LiaisonList: [
-          {
-            name: '刘锐',
-            customer: '山东宝铃自动化设备有限公司',
-            phone: '13853309041',
-            job: '经理',
-            injob: '在职',
-            created_at: '2021年6月2日 18:03',
-            user: '耿冠超'
-          }
-        ],
+        LiaisonList: [],
         // 拜访记录列表
-        RecordList: [
-          {
-            theme: '问客户工控机情况',
-            customer: '山东宝铃自动化设备有限公司',
-            status: '线上',
-            main: '一直用工控机，从北京那边买的',
-            next: '去淄博路过拜访一下客户，多了解',
-            created_at: '2021年6月2日 18:06',
-            user: '耿冠超'
-          },
-          {
-            theme: '问客户工控机情况',
-            customer: '山东宝铃自动化设备有限公司',
-            status: '线上',
-            main: '一直用工控机，从北京那边买的',
-            next: '去淄博路过拜访一下客户，多了解',
-            created_at: '2021年6月2日 18:06',
-            user: '耿冠超'
-          }
-        ],
+        RecordList: [],
         // 商机列表
-        BusinessList: [
-          {
-            name: '客户升级设备',
-            customer: '山东芙诺鑫智能科技有限公司',
-            winning_rate: '20%',
-            money: '无信息',
-            created_at: '2021年6月2日 17:52',
-            user: '耿冠超'
-          },
-          {
-            name: '客户升级设备',
-            customer: '山东芙诺鑫智能科技有限公司',
-            winning_rate: '20%',
-            money: '无信息',
-            created_at: '2021年6月2日 17:52',
-            user: '耿冠超'
-          },
-          {
-            name: '客户升级设备',
-            customer: '山东芙诺鑫智能科技有限公司',
-            winning_rate: '20%',
-            money: '无信息',
-            created_at: '2021年6月2日 17:52',
-            user: '耿冠超'
-          }
-        ]
+        BusinessList: []
       }
     },
     methods: {

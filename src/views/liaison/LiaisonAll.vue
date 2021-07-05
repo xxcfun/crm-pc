@@ -16,6 +16,14 @@
       <el-form-item label="客户名称" prop="customer">
         <el-input v-model="searchForm.customer" placeholder="请输入客户名称" clearable></el-input>
       </el-form-item>
+      <el-form-item label="创建人" prop="user">
+        <el-select v-model="searchForm.user" placeholder="请选择创建人" clearable>
+          <el-option
+            v-for="item in userList" :key="item.id"
+            :label="item.name" :value="item.username"
+          ></el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="onSubmit">搜索</el-button>
         <el-button icon="el-icon-circle-close" @click="resetForm('searchForm')">重置</el-button>
@@ -68,18 +76,9 @@
         </el-table-column>
         <el-table-column
           fixed="right"
-          label="操作"
+          prop="user.name"
+          label="创建人"
           width="150">
-          <template slot-scope="scope">
-            <el-button
-              size="mini"
-              type="primary"
-              @click="handleEdit(scope.row.id, scope.row)">编辑</el-button>
-            <el-button
-              size="mini"
-              type="danger"
-              @click="handleDelete(scope.row.id, scope.row)">删除</el-button>
-          </template>
         </el-table-column>
       </el-table>
     </template>
@@ -100,18 +99,21 @@
 </template>
 
 <script>
-  import { LiaisonApis } from '../../utils/api'
+  import { AccountApis, LiaisonApis } from '../../utils/api'
   import axios from 'axios'
 
   export default {
-    name: 'Liaison',
+    name: 'LiaisonAll',
     data () {
       return {
         // 搜索数据
         searchForm: {
           name: '',
-          customer: ''
+          customer: '',
+          user: ''
         },
+        // 用户列表
+        userList: [],
         // 表格数据
         LiaisonList: [],
         // 是否加载
@@ -159,63 +161,42 @@
         this.currentPage = val
         this.getLiaisonList()
       },
-      // 编辑
-      handleEdit (id, row) {
-        this.$router.push({ name: 'LiaisonDetail', params: { id: id } })
-      },
-      // 删除
-      handleDelete (id, row) {
-        this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          const url = LiaisonApis.liaisonDetailUrl.replace('#{id}', id)
-          axios.delete(url).then(({ data }) => {
-            this.$message({
-              type: 'success',
-              message: '删除成功!'
-            })
-            // 删除成功，再次查询一次接口
-            this.getLiaisonList()
-          }).catch(function (error) {
-            console.log(error)
-          })
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          })
-        })
-      },
       // 跳转到联系人详情信息页面
       goLiaisonDetail (id) {
-        this.$router.push({ name: 'LiaisonDetail', params: { id: id } })
+        this.$router.push({ name: 'LiaisonAllDetail', params: { id: id } })
       },
       // 跳转到客户详情信息页面
       goCustomerDetail (id) {
-        this.$router.push({ name: 'CustomerDetail', params: { id: id } })
+        this.$router.push({ name: 'CustomerAllDetail', params: { id: id } })
       },
       // 获取所有联系人列表
       getLiaisonList () {
         this.loading = true
-        axios.get(LiaisonApis.liaisonListUrl, {
+        axios.get(LiaisonApis.liaisonAllListUrl, {
           params: {
             page_size: this.pageSize,
             page: this.currentPage,
             name: this.searchForm.name,
-            customer: this.searchForm.customer
+            customer: this.searchForm.customer,
+            username: this.searchForm.user
           }
         }).then(({ data }) => {
           this.LiaisonList = data.results
           this.total = data.count
           this.loading = false
         })
+      },
+      // 获取所有业务用户列表
+      getUserList () {
+        axios.get(AccountApis.userListUrl).then(({ data }) => {
+          this.userList = data
+        })
       }
     },
     created () {
       // 查询接口
       this.getLiaisonList()
+      this.getUserList()
     }
   }
 </script>

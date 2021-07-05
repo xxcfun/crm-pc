@@ -20,6 +20,14 @@ import Login from '../views/account/Login'
 import AddLiaison from '../views/customer/AddLiaison'
 import AddRecord from '../views/customer/AddRecord'
 import AddBusiness from '../views/customer/AddBusiness'
+import CustomerAll from '../views/customer/CustomerAll'
+import CustomerAllDetail from '../views/customer/CustomerAllDetail'
+import LiaisonAll from '../views/liaison/LiaisonAll'
+import LiaisonAllDetail from '../views/liaison/LiaisonAllDetail'
+import RecordAll from '../views/record/RecordAll'
+import RecordAllDetail from '../views/record/RecordAllDetail'
+import BusinessAll from '../views/business/BusinessAll'
+import BusinessAllDetail from '../views/business/BusinessAllDetail'
 
 Vue.use(VueRouter)
 
@@ -85,6 +93,22 @@ const routes = [
         }
       },
       {
+        path: '/customer/all',
+        name: 'CustomerAll',
+        component: CustomerAll,
+        meta: {
+          title: 'CRM-所有客户列表'
+        }
+      },
+      {
+        path: '/customer/all/detail/:id',
+        name: 'CustomerAllDetail',
+        component: CustomerAllDetail,
+        meta: {
+          title: 'CRM-客户详情'
+        }
+      },
+      {
         path: '/liaison/add/:id',
         name: 'AddLiaison',
         component: AddLiaison,
@@ -133,6 +157,22 @@ const routes = [
           title: 'CRM-联系人详情'
         }
       },
+      {
+        path: '/liaison/all',
+        name: 'LiaisonAll',
+        component: LiaisonAll,
+        meta: {
+          title: 'CRM-所有联系人列表'
+        }
+      },
+      {
+        path: '/liaison/all/detail/:id',
+        name: 'LiaisonAllDetail',
+        component: LiaisonAllDetail,
+        meta: {
+          title: 'CRM-联系人详情'
+        }
+      },
       // 拜访记录模块
       {
         path: '/record',
@@ -154,6 +194,22 @@ const routes = [
         path: '/record/detail/:id',
         name: 'RecordDetail',
         component: RecordDetail,
+        meta: {
+          title: 'CRM-拜访记录详情'
+        }
+      },
+      {
+        path: '/record/all',
+        name: 'RecordAll',
+        component: RecordAll,
+        meta: {
+          title: 'CRM-所有拜访记录列表'
+        }
+      },
+      {
+        path: '/record/all/detail/:id',
+        name: 'RecordAllDetail',
+        component: RecordAllDetail,
         meta: {
           title: 'CRM-拜访记录详情'
         }
@@ -182,7 +238,23 @@ const routes = [
         meta: {
           title: 'CRM-商机详情'
         }
-      }
+      },
+      {
+        path: '/business/all',
+        name: 'BusinessAll',
+        component: BusinessAll,
+        meta: {
+          title: 'CRM-所有商机列表'
+        }
+      },
+      {
+        path: '/business/all/detail/:id',
+        name: 'BusinessAllDetail',
+        component: BusinessAllDetail,
+        meta: {
+          title: 'CRM-商机详情'
+        }
+      },
     ]
   },
   {

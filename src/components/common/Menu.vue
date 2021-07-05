@@ -110,22 +110,22 @@
               {
                 id: 401,
                 authName: '所有客户',
-                path: 'forms'
+                path: 'customer/all'
               },
               {
                 id: 402,
                 authName: '所有联系人',
-                path: 'table'
+                path: 'liaison/all'
               },
               {
                 id: 403,
                 authName: '所有拜访记录',
-                path: 'forms'
+                path: 'record/all'
               },
               {
                 id: 404,
                 authName: '所有商机',
-                path: 'table'
+                path: 'business/all'
               }
             ]
           },

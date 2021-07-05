@@ -66,7 +66,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="备注信息" prop="remarks">
-        <el-input type="textarea" v-model="CustomerForm.remarks"></el-input>
+        <el-input type="textarea" v-model="CustomerForm.remarks" clearable></el-input>
       </el-form-item>
 
       <el-form-item>
