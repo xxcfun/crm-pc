@@ -61,21 +61,25 @@
         <el-table-column
           prop="rank"
           label="客户级别"
+          sortable
           width="150">
         </el-table-column>
         <el-table-column
           prop="is_deal"
           label="是否成交"
+          sortable
           width="150">
         </el-table-column>
         <el-table-column
           prop="scale"
           label="客户规模"
+          sortable
           width="150">
         </el-table-column>
         <el-table-column
           prop="industry"
           label="客户行业"
+          sortable
           width="150">
         </el-table-column>
         <el-table-column

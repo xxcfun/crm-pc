@@ -9,19 +9,18 @@
     <el-divider></el-divider>
 
     <!-- 搜索栏 -->
-    <el-form :model="SearchForm" ref="SearchForm" :inline="true">
-      <el-form-item label="筛选员工数据">
-        <el-select v-model="SearchForm.username" placeholder="请选择员工" :clearable="clearable">
-          <el-option label="张安琪" value="1"></el-option>
-          <el-option label="黄振世" value="2"></el-option>
-          <el-option label="耿冠超" value="3"></el-option>
-          <el-option label="张乾" value="4"></el-option>
-          <el-option label="刘新军" value="5"></el-option>
-          <el-option label="闫学斌" value="6"></el-option>
+    <el-form :model="searchForm" ref="searchForm" :inline="true">
+      <el-form-item label="创建人" prop="user">
+        <el-select v-model="searchForm.user" placeholder="请选择员工" clearable>
+          <el-option
+            v-for="item in userList" :key="item.id"
+            :label="item.name" :value="item.username"
+          ></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" @click="onSubmit">搜索</el-button>
+        <el-button icon="el-icon-circle-close" @click="resetForm('searchForm')">重置</el-button>
       </el-form-item>
     </el-form>
 
@@ -29,6 +28,7 @@
     <div class="hr">客户总览：</div>
     <template>
       <el-table
+        v-loading="loading"
         :data="CustomerList"
         style="width: 100%"
         :cell-style="setCellColor">
@@ -61,8 +61,10 @@
           width="250">
         </el-table-column>
         <el-table-column
-          prop="user"
-          label="创建人">
+          fixed="right"
+          prop="user.name"
+          label="创建人"
+          width="150">
         </el-table-column>
       </el-table>
     </template>
@@ -70,6 +72,7 @@
     <div class="hr">联系人总览：</div>
     <template>
       <el-table
+        v-loading="loading"
         :data="LiaisonList"
         style="width: 100%"
         :cell-style="setCellColor">
@@ -82,7 +85,7 @@
           width="120">
         </el-table-column>
         <el-table-column
-          prop="customer"
+          prop="customer.name"
           label="客户名称"
           width="300">
         </el-table-column>
@@ -107,8 +110,10 @@
           width="250">
         </el-table-column>
         <el-table-column
-          prop="user"
-          label="创建人">
+          prop="user.name"
+          fixed="right"
+          label="创建人"
+          width="150">
         </el-table-column>
       </el-table>
     </template>
@@ -116,6 +121,7 @@
     <div class="hr">拜访记录总览：</div>
     <template>
       <el-table
+        v-loading="loading"
         :data="RecordList"
         style="width: 100%"
         :cell-style="setCellColor">
@@ -128,7 +134,7 @@
           width="300">
         </el-table-column>
         <el-table-column
-          prop="customer"
+          prop="customer.name"
           label="客户名称"
           width="300">
         </el-table-column>
@@ -148,16 +154,15 @@
           width="500">
         </el-table-column>
         <el-table-column
-          fixed="right"
           prop="created_at"
           label="创建时间"
           width="250">
         </el-table-column>
         <el-table-column
           fixed="right"
-          prop="user"
+          prop="user.name"
           label="创建人"
-          width="170">
+          width="150">
         </el-table-column>
       </el-table>
     </template>
@@ -165,6 +170,7 @@
     <div class="hr">商机总览：</div>
     <template>
       <el-table
+        v-loading="loading"
         :data="BusinessList"
         style="width: 100%; margin-bottom: 35px;"
         :cell-style="setCellColor">
@@ -177,7 +183,7 @@
           width="260">
         </el-table-column>
         <el-table-column
-          prop="customer"
+          prop="customer.name"
           label="客户名称"
           width="300">
         </el-table-column>
@@ -197,8 +203,10 @@
           width="300">
         </el-table-column>
         <el-table-column
-          prop="user"
-          label="创建人">
+          fixed="right"
+          prop="user.name"
+          label="创建人"
+          width="150">
         </el-table-column>
       </el-table>
     </template>
@@ -207,16 +215,23 @@
 </template>
 
 <script>
+  import axios from 'axios'
+  import { AccountApis, DataApis } from '../../utils/api'
+
   export default {
     name: 'DataWeek',
     data () {
       return {
         // 搜索数据
-        SearchForm: {
-          username: ''
+        searchForm: {
+          user: ''
         },
         // 是否可以清除
         clearable: true,
+        // 是否加载
+        loading: true,
+        // 用户列表
+        userList: [],
         // 客户列表
         CustomerList: [],
         // 联系人列表
@@ -228,12 +243,95 @@
       }
     },
     methods: {
+      // 提交查询
+      onSubmit () {
+        // 重置数据
+        this.CustomerList = []
+        this.LiaisonList = []
+        this.RecordList = []
+        this.BusinessList = []
+        // 执行查询
+        this.loadData()
+      },
+      // 重置
+      resetForm (formName) {
+        this.$refs[formName].resetFields()
+        // 重置页面数据
+        this.CustomerList = []
+        this.LiaisonList = []
+        this.RecordList = []
+        this.BusinessList = []
+        // 重置完成后，重新调用接口
+        this.loadData()
+      },
       // 统一列颜色
       setCellColor ({ row, column, rowIndex, columnIndex }) {
         if (columnIndex === 1) {
           return 'color: #3DA2DF; font-weight: bold;'
         }
+      },
+      // 获取一周工作数据
+      getCustomerList () {
+        this.loading = true
+        axios.get(DataApis.weekCustomerUrl, {
+          params: {
+            username: this.searchForm.user
+          }
+        }).then(({ data }) => {
+          this.CustomerList = data
+          this.loading = false
+        })
+      },
+      getLiaisonList () {
+        this.loading = true
+        axios.get(DataApis.weekLiaisonUrl, {
+          params: {
+            username: this.searchForm.user
+          }
+        }).then(({ data }) => {
+          this.LiaisonList = data
+          this.loading = false
+        })
+      },
+      getRecordList () {
+        this.loading = true
+        axios.get(DataApis.weekRecordUrl, {
+          params: {
+            username: this.searchForm.user
+          }
+        }).then(({ data }) => {
+          this.RecordList = data
+          this.loading = false
+        })
+      },
+      getBusinessList () {
+        this.loading = true
+        axios.get(DataApis.weekBusinessUrl, {
+          params: {
+            username: this.searchForm.user
+          }
+        }).then(({ data }) => {
+          this.BusinessList = data
+          this.loading = false
+        })
+      },
+      loadData () {
+        this.getCustomerList()
+        this.getLiaisonList()
+        this.getRecordList()
+        this.getBusinessList()
+      },
+      // 获取所有业务用户列表
+      getUserList () {
+        axios.get(AccountApis.userListUrl).then(({ data }) => {
+          this.userList = data
+        })
       }
+    },
+    created () {
+      // 查询接口
+      this.loadData()
+      this.getUserList()
     }
   }
 </script>

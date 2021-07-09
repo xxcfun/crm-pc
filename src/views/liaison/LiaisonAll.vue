@@ -78,6 +78,7 @@
           fixed="right"
           prop="user.name"
           label="创建人"
+          sortable
           width="150">
         </el-table-column>
       </el-table>

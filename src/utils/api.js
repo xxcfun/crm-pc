@@ -42,9 +42,17 @@ const BusinessApis = {
   businessAllDetailUrl: apiHost + '/business/all/business/#{id}/',
 }
 /* OKR相关接口 */
-/* 系统相关接口 */
+/* 数据模块相关接口 */
+const DataApis = {
+  dataListUrl: apiHost + '/data/data/',
+  weekCustomerUrl: apiHost + '/data/data/customer/',
+  weekLiaisonUrl: apiHost + '/data/data/liaison/',
+  weekRecordUrl: apiHost + '/data/data/record/',
+  weekBusinessUrl: apiHost + '/data/data/business/'
+}
 
 export {
+  DataApis,
   BusinessApis,
   RecordApis,
   LiaisonApis,

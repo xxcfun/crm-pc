@@ -11,50 +11,51 @@
     <!-- 表格 -->
     <template>
       <el-table
+        v-loading="loading"
         :data="tableData"
         style="width: 100%">
         <el-table-column
-          prop="name"
+          prop="user.name"
           label="姓名">
         </el-table-column>
         <el-table-column
-          prop="yesxx"
+          prop="yes_record"
           label="昨日线下拜访">
         </el-table-column>
         <el-table-column
-          prop="yesxs"
+          prop="yes_phone"
           label="昨日线上拜访">
         </el-table-column>
         <el-table-column
-          prop="newcus"
+          prop="new_customer"
           label="新增客户">
         </el-table-column>
         <el-table-column
-          prop="newbus"
+          prop="new_business"
           label="新增商机">
         </el-table-column>
         <el-table-column
-          prop="weekxx"
+          prop="week_record"
           label="本周线下拜访">
         </el-table-column>
         <el-table-column
-          prop="weekxs"
+          prop="week_phone"
           label="本周线上拜访">
         </el-table-column>
         <el-table-column
-          prop="weekbus"
+          prop="week_business"
           label="本周商机数量">
         </el-table-column>
         <el-table-column
-          prop="moncus"
+          prop="mon_customer"
           label="本月客户数量">
         </el-table-column>
         <el-table-column
-          prop="folbus"
+          prop="fol_business"
           label="跟进商机">
         </el-table-column>
         <el-table-column
-          prop="finbus"
+          prop="fin_business"
           label="完成商机">
         </el-table-column>
       </el-table>
@@ -63,117 +64,30 @@
 </template>
 
 <script>
+  import axios from 'axios'
+  import { DataApis } from '../../utils/api'
+
   export default {
     name: 'Data',
     data () {
       return {
-        tableData: [
-          {
-            name: '尹明辉',
-            yesxx: '0',
-            yesxs: '0',
-            newcus: '0',
-            newbus: '0',
-            weekxx: '0',
-            weekxs: '0',
-            weekbus: '0',
-            moncus: '0',
-            folbus: '0',
-            finbus: '0'
-          },
-          {
-            name: '任文强',
-            yesxx: '0',
-            yesxs: '0',
-            newcus: '0',
-            newbus: '0',
-            weekxx: '0',
-            weekxs: '0',
-            weekbus: '0',
-            moncus: '0',
-            folbus: '0',
-            finbus: '0'
-          },
-          {
-            name: '刘新军',
-            yesxx: '0',
-            yesxs: '0',
-            newcus: '0',
-            newbus: '0',
-            weekxx: '0',
-            weekxs: '0',
-            weekbus: '0',
-            moncus: '0',
-            folbus: '0',
-            finbus: '0'
-          },
-          {
-            name: '闫学斌',
-            yesxx: '0',
-            yesxs: '0',
-            newcus: '0',
-            newbus: '0',
-            weekxx: '0',
-            weekxs: '0',
-            weekbus: '0',
-            moncus: '0',
-            folbus: '0',
-            finbus: '0'
-          },
-          {
-            name: '耿冠超',
-            yesxx: '0',
-            yesxs: '0',
-            newcus: '0',
-            newbus: '0',
-            weekxx: '0',
-            weekxs: '0',
-            weekbus: '0',
-            moncus: '0',
-            folbus: '0',
-            finbus: '0'
-          },
-          {
-            name: '张安琪',
-            yesxx: '0',
-            yesxs: '0',
-            newcus: '0',
-            newbus: '0',
-            weekxx: '0',
-            weekxs: '0',
-            weekbus: '0',
-            moncus: '0',
-            folbus: '0',
-            finbus: '0'
-          },
-          {
-            name: '黄振世',
-            yesxx: '0',
-            yesxs: '0',
-            newcus: '0',
-            newbus: '0',
-            weekxx: '0',
-            weekxs: '0',
-            weekbus: '0',
-            moncus: '0',
-            folbus: '0',
-            finbus: '0'
-          },
-          {
-            name: '张乾',
-            yesxx: '0',
-            yesxs: '0',
-            newcus: '0',
-            newbus: '0',
-            weekxx: '0',
-            weekxs: '0',
-            weekbus: '0',
-            moncus: '0',
-            folbus: '0',
-            finbus: '0'
-          }
-        ]
+        tableData: [],
+        loading: true
       }
+    },
+    methods: {
+      // 获取表格数据
+      getTableData () {
+        this.loading = true
+        axios.get(DataApis.dataListUrl).then(({ data }) => {
+          this.tableData = data
+          this.loading = false
+        })
+      }
+    },
+    created () {
+      // 查询接口
+      this.getTableData()
     }
   }
 </script>
