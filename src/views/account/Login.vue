@@ -139,9 +139,12 @@
                 type: 'success'
               })
               this.$router.push({ name: 'Home' })
-            }).catch(({ response: { data } }) => {
+            }).catch(() => {
               // 如果有问题，需要给用户提示异常信息
-              console.log(data)
+              this.$message({
+                message: '用户名或者密码错误，如果忘记密码，请联系管理员',
+                type: 'error'
+              })
             })
           } else {
             console.log('error submit!!')

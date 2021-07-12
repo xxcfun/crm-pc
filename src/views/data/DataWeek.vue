@@ -9,7 +9,7 @@
     <el-divider></el-divider>
 
     <!-- 搜索栏 -->
-    <el-form :model="searchForm" ref="searchForm" :inline="true">
+    <el-form :model="searchForm" ref="searchForm" :inline="true" v-if="userInfo.name === 'ymh'">
       <el-form-item label="创建人" prop="user">
         <el-select v-model="searchForm.user" placeholder="请选择员工" clearable>
           <el-option
@@ -217,6 +217,7 @@
 <script>
   import axios from 'axios'
   import { AccountApis, DataApis } from '../../utils/api'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'DataWeek',
@@ -327,6 +328,11 @@
           this.userList = data
         })
       }
+    },
+    computed: {
+      ...mapGetters({
+        userInfo: 'userInfo'
+      })
     },
     created () {
       // 查询接口
