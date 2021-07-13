@@ -15,8 +15,17 @@
       <!--一级菜单-->
       <!--
         这里:index不能接受数值，只能接受字符串，而在item.id获取的是数值，在后面拼接一个空字符可以转换为字符串
+        ROLE_AD = 0, '系统管理员'
+        ROLE_JL = 1, '经理'
+        ROLE_YW = 2, '业务'
+        ROLE_ZG = 3, '主管'
+        ROLE_SW = 4, '商务'
+        ROLE_RS = 5, '人事'
+        ROLE_SQ = 6, '售前'
+        ROLE_JS = 7, '技术'
       -->
-      <div v-if="userInfo.name === 'ymh'">
+      <!-- 经理 -->
+      <div v-if="role === 1">
         <el-submenu :index="item.id + ''" v-for="item in adminMenuList" :key="item.id">
           <!--一级菜单的模板区域-->
           <template slot="title">
@@ -38,6 +47,53 @@
           </el-menu-item>
         </el-submenu>
       </div>
+      <!-- 人事 -->
+      <div v-else-if="role === 5">
+        <el-submenu :index="item.id + ''" v-for="item in RSMenuList" :key="item.id">
+          <!--一级菜单的模板区域-->
+          <template slot="title">
+            <!--图标-->
+            <i :class="iconsObj[item.id]"></i>
+            <!--文本-->
+            <span>{{ item.authName }}</span>
+          </template>
+          <!--二级菜单-->
+          <el-menu-item :index="'/' + subItem.path" v-for="subItem in item.children" :key="subItem.id"
+                        @click="saveNavState('/' + subItem.path)">
+            <!--二级菜单的模板区域-->
+            <template slot="title">
+              <!--图标-->
+              <i class="el-icon-menu"></i>
+              <!--文本-->
+              <span>{{ subItem.authName }}</span>
+            </template>
+          </el-menu-item>
+        </el-submenu>
+      </div>
+      <!-- 超级管理员 -->
+      <div v-else-if="role === 0">
+        <el-submenu :index="item.id + ''" v-for="item in RSMenuList" :key="item.id">
+          <!--一级菜单的模板区域-->
+          <template slot="title">
+            <!--图标-->
+            <i :class="iconsObj[item.id]"></i>
+            <!--文本-->
+            <span>{{ item.authName }}</span>
+          </template>
+          <!--二级菜单-->
+          <el-menu-item :index="'/' + subItem.path" v-for="subItem in item.children" :key="subItem.id"
+                        @click="saveNavState('/' + subItem.path)">
+            <!--二级菜单的模板区域-->
+            <template slot="title">
+              <!--图标-->
+              <i class="el-icon-menu"></i>
+              <!--文本-->
+              <span>{{ subItem.authName }}</span>
+            </template>
+          </el-menu-item>
+        </el-submenu>
+      </div>
+      <!-- 业务 -->
       <div v-else>
         <el-submenu :index="item.id + ''" v-for="item in menuList" :key="item.id">
           <!--一级菜单的模板区域-->
@@ -60,15 +116,15 @@
           </el-menu-item>
         </el-submenu>
       </div>
+
     </el-menu>
   </el-aside>
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
-
   export default {
     name: 'Menu',
+    props: ['role'],
     data () {
       return {
         // 左侧菜单表
@@ -82,11 +138,6 @@
                 authName: '数据一览',
                 path: 'data'
               },
-              {
-                id: 102,
-                authName: '一周工作汇总',
-                path: 'data/week'
-              }
             ]
           },
           {
@@ -219,6 +270,50 @@
           //   ]
           // }
         ],
+        RSMenuList: [
+          {
+            id: 10,
+            authName: '数据汇总',
+            children: [
+              {
+                id: 101,
+                authName: '数据一览',
+                path: 'data'
+              },
+              {
+                id: 102,
+                authName: '一周工作汇总',
+                path: 'data/week'
+              }
+            ]
+          },
+          {
+            id: 40,
+            authName: '管理列表',
+            children: [
+              {
+                id: 401,
+                authName: '所有客户',
+                path: 'customer/all'
+              },
+              {
+                id: 402,
+                authName: '所有联系人',
+                path: 'liaison/all'
+              },
+              {
+                id: 403,
+                authName: '所有拜访记录',
+                path: 'record/all'
+              },
+              {
+                id: 404,
+                authName: '所有商机',
+                path: 'business/all'
+              }
+            ]
+          },
+        ],
         // 左侧菜单图标对象
         iconsObj: {
           10: 'el-icon-s-promotion',
@@ -251,11 +346,6 @@
         window.sessionStorage.setItem(activePath, activePath)
         this.activePath = activePath
       }
-    },
-    computed: {
-      ...mapGetters({
-        userInfo: 'userInfo'
-      })
     }
   }
 </script>

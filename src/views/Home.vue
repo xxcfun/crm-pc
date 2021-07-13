@@ -26,7 +26,7 @@
     <!-- 页面主体区域 -->
     <el-container>
       <!-- 左侧导航栏 -->
-      <aside-menu/>
+      <aside-menu :role="userInfo.role"/>
       <el-container>
         <!--右侧内容主体-->
         <el-main>
@@ -46,7 +46,6 @@
   import AsideMenu from '../components/common/Menu'
   import { AccountApis } from '../utils/api'
   import axios from 'axios'
-  import { mapGetters } from 'vuex'
 
   export default {
     name: 'Home',
@@ -55,9 +54,18 @@
     },
     data () {
       return {
+        userInfo: []
       }
     },
     methods: {
+      // 获取用户详情信息
+      getUserInfo () {
+        axios.get(AccountApis.userInfoUrl).then(({ data }) => {
+          this.userInfo = data
+        }).catch(function (error) {
+          console.log(error);
+        })
+      },
       // 用户登出
       logout () {
         // 跳转到登录
@@ -75,10 +83,9 @@
         this.activePath = activePath
       }
     },
-    computed: {
-      ...mapGetters({
-        userInfo: 'userInfo'
-      })
+    created () {
+      // 查询接口
+      this.getUserInfo()
     }
   }
 </script>

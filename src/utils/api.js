@@ -1,11 +1,13 @@
 /* 存放项目中的所有地址 */
 
+// 生产环境
+// 开发环境
 const apiHost = 'http://localhost:8080/api'
 
 /* 用户相关接口 */
 const AccountApis = {
   loginUrl: apiHost + '/account/login/',
-  userInfoUrl: apiHost + '/account/login/',
+  userInfoUrl: apiHost + '/account/users/1/',
   userListUrl: apiHost + '/account/users/'
 }
 
