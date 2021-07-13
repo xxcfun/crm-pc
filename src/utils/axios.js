@@ -23,10 +23,13 @@ axios.interceptors.response.use(
     switch (res.status) {
       case 401:
         console.log('未登录，或者token过期')
+        window.app.$router.replace({ name: 'Login' })
       case 403:
         console.log('您没有该操作权限')
+        window.app.$router.replace({ name: 'Login' })
       case 500:
         console.log('服务器错误')
+        window.app.$router.replace({ name: 'Login' })
     }
     // 返回接口返回的错误信息
     return Promise.reject(error.response.data)
