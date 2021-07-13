@@ -18,10 +18,11 @@
       </el-form-item>
       <el-form-item label="赢单率" prop="winning_rate">
         <el-select v-model="searchForm.winning_rate" placeholder="请选择赢单率" clearable>
-          <el-option label="20%" :value=1></el-option>
-          <el-option label="50%" :value=2></el-option>
-          <el-option label="80%" :value=3></el-option>
-          <el-option label="100%" :value=4></el-option>
+          <el-option label="0%" :value=1></el-option>
+          <el-option label="20%" :value=2></el-option>
+          <el-option label="50%" :value=3></el-option>
+          <el-option label="80%" :value=4></el-option>
+          <el-option label="100%" :value=5></el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
