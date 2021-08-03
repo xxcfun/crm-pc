@@ -9,7 +9,7 @@ import {
   Form,
   FormItem,
   Header,
-  Input, Link, Loading,
+  Input, InputNumber, Link, Loading,
   Main,
   Menu,
   MenuItem, Message, MessageBox, Option, PageHeader, Pagination, Radio, RadioGroup, Row, Select,
@@ -17,6 +17,7 @@ import {
 } from 'element-ui'
 
 Vue.use(Loading.directive)
+Vue.use(InputNumber)
 Vue.use(Radio)
 Vue.use(RadioGroup)
 Vue.use(Autocomplete)

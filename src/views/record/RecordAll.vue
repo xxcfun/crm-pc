@@ -3,7 +3,7 @@
   <div class="page-record">
     <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ name: 'Record' }">客户管理</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ name: 'RecordAll' }">客户管理</el-breadcrumb-item>
       <el-breadcrumb-item>拜访记录列表</el-breadcrumb-item>
     </el-breadcrumb>
     <el-divider></el-divider>

@@ -1,18 +1,15 @@
 <template>
-  <!-- 联系人列表 -->
-  <div class="page-liaison">
+  <!-- 实施列表 -->
+  <div class="page-implement">
     <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ name: 'LiaisonAll' }">客户管理</el-breadcrumb-item>
-      <el-breadcrumb-item>联系人列表</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ name: 'ImplementAll' }">实施管理</el-breadcrumb-item>
+      <el-breadcrumb-item>实施列表</el-breadcrumb-item>
     </el-breadcrumb>
     <el-divider></el-divider>
 
     <!-- 搜索栏 -->
     <el-form :model="searchForm" ref="searchForm" :inline="true">
-      <el-form-item label="联系人姓名" prop="name">
-        <el-input v-model="searchForm.name" placeholder="请输入联系人姓名" clearable></el-input>
-      </el-form-item>
       <el-form-item label="客户名称" prop="customer">
         <el-input v-model="searchForm.customer" placeholder="请输入客户名称" clearable></el-input>
       </el-form-item>
@@ -34,17 +31,17 @@
     <template>
       <el-table
         v-loading="loading"
-        :data="LiaisonList"
+        :data="ImplementList"
         style="width: 100%"
         :cell-style="setCellColor">
         <el-table-column
           type="index">
         </el-table-column>
         <el-table-column
-          label="联系人姓名"
-          width="200">
+          label="实施测试方案"
+          width="300">
           <template slot-scope="scope">
-            <a @click="goLiaisonDetail(scope.row.id)" style="color: #3DA2DF; font-weight: bold;cursor:pointer">{{scope.row.name}}</a>
+            <a @click="goImplementDetail(scope.row.id)" style="color: #3DA2DF; font-weight: bold;cursor:pointer">{{scope.row.testplan}}</a>
           </template>
         </el-table-column>
         <el-table-column
@@ -55,30 +52,19 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="phone"
-          label="联系方式"
-          width="200">
+          prop="report"
+          label="测试结果反馈"
+          width="350">
         </el-table-column>
         <el-table-column
-          prop="job"
-          label="职位"
-          width="150">
-        </el-table-column>
-        <el-table-column
-          prop="injob"
-          label="是否在职"
-          width="150">
-        </el-table-column>
-        <el-table-column
-          prop="created_at"
-          label="创建时间"
+          prop="date"
+          label="实施时间"
           width="200">
         </el-table-column>
         <el-table-column
           fixed="right"
           prop="user.name"
-          label="创建人"
-          sortable
+          label="实施人员"
           width="150">
         </el-table-column>
       </el-table>
@@ -100,25 +86,24 @@
 </template>
 
 <script>
-  import { AccountApis, LiaisonApis } from '../../utils/api'
+  import { AccountApis, ImplementApis } from '../../utils/api'
   import axios from 'axios'
 
   export default {
-    name: 'LiaisonAll',
+    name: 'ImplementAll',
     data () {
       return {
         // 搜索数据
         searchForm: {
-          name: '',
           customer: '',
           user: ''
         },
         // 用户列表
         userList: [],
         // 表格数据
-        LiaisonList: [],
+        ImplementList: [],
         // 是否加载
-        loading: true,
+        loading: false,
         // 当前页码
         currentPage: 1,
         // 总记录数
@@ -131,19 +116,19 @@
       // 提交查询
       onSubmit () {
         // 重置数据
-        this.LiaisonList = []
+        this.ImplementList = []
         this.currentPage = 1
         // 执行查询
-        this.getLiaisonList()
+        this.getImplementList()
       },
       // 重置
       resetForm (formName) {
         this.$refs[formName].resetFields()
         // 重置页面数据
-        this.LiaisonList = []
+        this.ImplementList = []
         this.currentPage = 1
         // 重置完成后，重新调用接口
-        this.getLiaisonList()
+        this.getImplementList()
       },
       // 统一列颜色
       setCellColor ({ row, column, rowIndex, columnIndex }) {
@@ -155,55 +140,54 @@
       handleSizeChange (val) {
         console.log(`每页 ${val} 条`)
         this.pageSize = val
-        this.getLiaisonList()
+        this.getImplementList()
       },
       handleCurrentChange (val) {
         console.log(`当前页: ${val}`)
         this.currentPage = val
-        this.getLiaisonList()
+        this.getImplementList()
       },
-      // 跳转到联系人详情信息页面
-      goLiaisonDetail (id) {
-        this.$router.push({ name: 'LiaisonAllDetail', params: { id: id } })
+      // 跳转到拜访记录详情信息页面
+      goImplementDetail (id) {
+        this.$router.push({ name: 'ImplementAllDetail', params: { id: id } })
       },
       // 跳转到客户详情信息页面
       goCustomerDetail (id) {
         this.$router.push({ name: 'CustomerAllDetail', params: { id: id } })
       },
-      // 获取所有联系人列表
-      getLiaisonList () {
+      // 获取所有拜访记录列表
+      getImplementList () {
         this.loading = true
-        axios.get(LiaisonApis.liaisonAllListUrl, {
+        axios.get(ImplementApis.implementAllListUrl, {
           params: {
             page_size: this.pageSize,
             page: this.currentPage,
-            name: this.searchForm.name,
             customer: this.searchForm.customer,
             username: this.searchForm.user
           }
         }).then(({ data }) => {
-          this.LiaisonList = data.results
+          this.ImplementList = data.results
           this.total = data.count
           this.loading = false
         })
       },
       // 获取所有业务用户列表
       getUserList () {
-        axios.get(AccountApis.userListUrl).then(({ data }) => {
+        axios.get(AccountApis.jsuserListUrl).then(({ data }) => {
           this.userList = data
         })
       }
     },
     created () {
       // 查询接口
-      this.getLiaisonList()
+      this.getImplementList()
       this.getUserList()
     }
   }
 </script>
 
 <style scoped lang="less">
-  .page-liaison {
+  .page-implement {
     .block {
       margin-top: 10px;
       background-color: #fff;

@@ -3,7 +3,7 @@
   <div class="page-customer">
     <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ name: 'Customer' }">客户管理</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ name: 'CustomerAll' }">客户管理</el-breadcrumb-item>
       <el-breadcrumb-item>所有客户列表</el-breadcrumb-item>
     </el-breadcrumb>
     <el-divider></el-divider>

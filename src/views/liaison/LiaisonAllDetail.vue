@@ -2,7 +2,7 @@
   <div class="page-liaison-detail">
     <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ name: 'Liaison' }">客户管理</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ name: 'LiaisonAll' }">客户管理</el-breadcrumb-item>
       <el-breadcrumb-item>联系人详情</el-breadcrumb-item>
       <el-breadcrumb-item>{{ LiaisonForm.name }} - {{ LiaisonForm.customer.name }}</el-breadcrumb-item>
     </el-breadcrumb>

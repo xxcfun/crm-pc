@@ -93,6 +93,29 @@
           </el-menu-item>
         </el-submenu>
       </div>
+      <!-- 后端人员 -->
+      <div v-else-if="role === 7">
+        <el-submenu :index="item.id + ''" v-for="item in JSMenuList" :key="item.id">
+          <!--一级菜单的模板区域-->
+          <template slot="title">
+            <!--图标-->
+            <i :class="iconsObj[item.id]"></i>
+            <!--文本-->
+            <span>{{ item.authName }}</span>
+          </template>
+          <!--二级菜单-->
+          <el-menu-item :index="'/' + subItem.path" v-for="subItem in item.children" :key="subItem.id"
+                        @click="saveNavState('/' + subItem.path)">
+            <!--二级菜单的模板区域-->
+            <template slot="title">
+              <!--图标-->
+              <i class="el-icon-menu"></i>
+              <!--文本-->
+              <span>{{ subItem.authName }}</span>
+            </template>
+          </el-menu-item>
+        </el-submenu>
+      </div>
       <!-- 业务 -->
       <div v-else>
         <el-submenu :index="item.id + ''" v-for="item in menuList" :key="item.id">
@@ -128,6 +151,7 @@
     data () {
       return {
         // 左侧菜单表
+        // 业务
         menuList: [
           {
             id: 10,
@@ -178,6 +202,7 @@
             ]
           },
         ],
+        // 经理
         adminMenuList: [
           {
             id: 10,
@@ -258,18 +283,34 @@
               }
             ]
           },
-          // {
-          //   id: 50,
-          //   authName: '业务大屏',
-          //   children: [
-          //     {
-          //       id: 501,
-          //       authName: '大屏展示',
-          //       path: 'bigscreen'
-          //     }
-          //   ]
-          // }
+          {
+            id: 50,
+            authName: '售前售后',
+            children: [
+              {
+                id: 501,
+                authName: '售前支持',
+                path: 'presupport/all'
+              },
+              {
+                id: 502,
+                authName: '实施送测',
+                path: 'implement/all'
+              },
+              {
+                id: 503,
+                authName: '售后支持',
+                path: 'aftersupport/all'
+              },
+              {
+                id: 504,
+                authName: '售后维修',
+                path: 'service/all'
+              },
+            ]
+          }
         ],
+        // 人事 管理员
         RSMenuList: [
           {
             id: 10,
@@ -314,17 +355,46 @@
             ]
           },
         ],
+        // 技术
+        JSMenuList: [
+          {
+            id: 50,
+            authName: '售前售后',
+            children: [
+              {
+                id: 501,
+                authName: '售前支持',
+                path: 'presupport'
+              },
+              {
+                id: 502,
+                authName: '实施送测',
+                path: 'implement'
+              },
+              {
+                id: 503,
+                authName: '售后支持',
+                path: 'aftersupport'
+              },
+              {
+                id: 504,
+                authName: '售后维修',
+                path: 'service'
+              },
+            ]
+          }
+        ],
         // 左侧菜单图标对象
         iconsObj: {
           10: 'el-icon-s-promotion',
           20: 'el-icon-s-marketing',
           30: 'el-icon-s-data',
           40: 'el-icon-s-flag',
-          // 50: 'el-icon-s-platform'
+          50: 'el-icon-s-release'
+          // 60: 'el-icon-s-platform'
         },
         // 展开的菜单
-        // open_list: ['10', '20', '30', '40', '50'],
-        open_list: ['10', '20', '30', '40'],
+        open_list: ['10', '20', '30', '40', '50'],
         // 是否折叠
         isCollapse: false,
         // 被激活的链接地址

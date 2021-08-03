@@ -26,10 +26,10 @@ axios.interceptors.response.use(
         window.app.$router.replace({ name: 'Login' })
       case 403:
         console.log('您没有该操作权限')
-        window.app.$router.replace({ name: 'Login' })
+        window.app.$message({message: '您没有该操作权限', type: 'warning'})
       case 500:
         console.log('服务器错误')
-        window.app.$router.replace({ name: 'Login' })
+        window.app.$message({message: '服务器错误', type: 'error'})
     }
     // 返回接口返回的错误信息
     return Promise.reject(error.response.data)

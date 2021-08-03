@@ -11,43 +11,49 @@
       添加商机：
     </div>
 
-    <!-- 表单 -->
-    <el-form :model="BusinessForm" :rules="rules" ref="BusinessForm" label-width="80px" style="width: 50%">
-      <el-form-item label="商机名称" prop="name">
-        <el-input v-model="BusinessForm.name" clearable></el-input>
-      </el-form-item>
-      <el-form-item label="客户名称" prop="state">
-        <el-autocomplete
-          v-model="BusinessForm.state"
-          :fetch-suggestions="querySearchAsync"
-          placeholder="请输入客户名称"
-          @select="handleSelect"
-          clearable style="width: 100%"
-        ></el-autocomplete>
-      </el-form-item>
-      <el-form-item label="赢单率" prop="winning_rate">
-        <el-select v-model="BusinessForm.winning_rate" placeholder="请选择赢单率" clearable>
-          <el-option label="0%" :value=1></el-option>
-          <el-option label="20%" :value=2></el-option>
-          <el-option label="50%" :value=3></el-option>
-          <el-option label="80%" :value=4></el-option>
-          <el-option label="100%" :value=5></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="预估金额" prop="money">
-        <el-input v-model="BusinessForm.money" clearable style="width: 50%">
-          <template slot="append">万元</template>
-        </el-input>
-      </el-form-item>
-      <el-form-item label="备注信息" prop="remarks">
-        <el-input type="textarea" v-model="BusinessForm.remarks" clearable></el-input>
-      </el-form-item>
+    <el-row :gutter="20" style="margin-bottom: 30px">
 
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('BusinessForm')">立即添加</el-button>
-        <el-button @click="resetForm('BusinessForm')">重置</el-button>
-      </el-form-item>
-    </el-form>
+      <el-col :span="12">
+        <!-- 表单 -->
+        <el-form :model="BusinessForm" :rules="rules" ref="BusinessForm" label-width="80px">
+          <el-form-item label="商机名称" prop="name">
+            <el-input v-model="BusinessForm.name" clearable></el-input>
+          </el-form-item>
+          <el-form-item label="客户名称" prop="state">
+            <el-autocomplete
+              v-model="BusinessForm.state"
+              :fetch-suggestions="querySearchAsync"
+              placeholder="请输入客户名称"
+              @select="handleSelect"
+              clearable style="width: 100%"
+            ></el-autocomplete>
+          </el-form-item>
+          <el-form-item label="赢单率" prop="winning_rate">
+            <el-select v-model="BusinessForm.winning_rate" placeholder="请选择赢单率" clearable>
+              <el-option label="0%" :value=1></el-option>
+              <el-option label="20%" :value=2></el-option>
+              <el-option label="50%" :value=3></el-option>
+              <el-option label="80%" :value=4></el-option>
+              <el-option label="100%" :value=5></el-option>
+            </el-select>
+          </el-form-item>
+<!--          <el-form-item label="预估金额">-->
+<!--            <el-input v-model="sum" readonly style="width: 50%">-->
+<!--              <template slot="append">万元</template>-->
+<!--            </el-input>-->
+<!--          </el-form-item>-->
+          <el-form-item label="备注信息" prop="remarks">
+            <el-input type="textarea" v-model="BusinessForm.remarks" clearable></el-input>
+          </el-form-item>
+
+          <el-form-item>
+            <el-button type="primary" @click="submitForm('BusinessForm')">立即添加</el-button>
+            <el-button @click="resetForm('BusinessForm')">重置</el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+
+    </el-row>
   </div>
 </template>
 
@@ -63,7 +69,6 @@
           name: '',
           state: '',
           winning_rate: '',
-          money: '',
           remarks: ''
         },
         rules: {
@@ -71,7 +76,7 @@
             { required: true, message: '请输入商机名称', trigger: 'blur' }
           ],
           state: [
-            { required: true, message: '请输入客户名称', trigger: 'blur' }
+            { required: true, message: '请输入客户名称' }
           ],
           winning_rate: [
             { required: true, message: '请选择商机赢单率', trigger: 'change' }
@@ -81,7 +86,7 @@
         customer_id: '',
         // 联想输入框
         restaurants: [],
-        timeout: null
+        timeout: null,
       }
     },
     methods: {
@@ -108,6 +113,7 @@
       handleSelect (item) {
         // 选中数据，给 customer id 赋值
         this.customer_id = item.id
+        this.getProductInfo()
         console.log(item)
       },
       // 提交按钮
@@ -118,7 +124,6 @@
               name: this.BusinessForm.name,
               customer: this.customer_id,
               winning_rate: this.BusinessForm.winning_rate,
-              money: this.BusinessForm.money,
               remarks: this.BusinessForm.remarks
             }).then(({ data }) => {
               this.$message({
@@ -136,9 +141,11 @@
       // 重置按钮
       resetForm (formName) {
         this.$refs[formName].resetFields()
+        this.customer_id = null
+        this.getProductInfo()
       }
     },
-    mounted () {
+    created () {
       this.loadAll()
     }
   }
@@ -152,6 +159,26 @@
       color: #3DA2DF;
       font-weight: bold;
       background-color: #ffffff;
+    }
+
+    .box-card {
+
+      .text {
+        font-size: 14px;
+      }
+
+      .item {
+        margin-bottom: 18px;
+      }
+
+      .clearfix:before,
+      .clearfix:after {
+        display: table;
+        content: "";
+      }
+      .clearfix:after {
+        clear: both
+      }
     }
   }
 </style>

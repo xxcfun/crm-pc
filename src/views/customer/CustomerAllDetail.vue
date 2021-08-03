@@ -3,7 +3,7 @@
   <div class="page-customer-detail">
     <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ name: 'Customer' }">客户管理</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ name: 'CustomerAll' }">客户管理</el-breadcrumb-item>
       <el-breadcrumb-item>客户详情</el-breadcrumb-item>
       <el-breadcrumb-item>{{ CustomerForm.name }}</el-breadcrumb-item>
     </el-breadcrumb>
@@ -140,7 +140,7 @@
     <template>
       <el-table
         :data="BusinessList"
-        style="width: 100%; margin-bottom: 35px;"
+        style="width: 100%"
         :cell-style="setCellColor">
         <el-table-column
           prop="name"
@@ -166,6 +166,158 @@
           fixed="right"
           prop="user.name"
           label="创建人"
+          width="150">
+        </el-table-column>
+      </el-table>
+    </template>
+
+    <!-- 该客户下的售前支持记录 -->
+    <div class="hr">
+      <div>售前支持记录：</div>
+    </div>
+    <template>
+      <el-table
+        :data="PreSupportList"
+        style="width: 100%"
+        :cell-style="setCellColor">
+        <el-table-column
+          prop="preplan"
+          label="售前方案"
+          width="300">
+        </el-table-column>
+        <el-table-column
+          prop="product"
+          label="产品"
+          width="250">
+        </el-table-column>
+        <el-table-column
+          prop="cycle"
+          label="周期"
+          width="150">
+        </el-table-column>
+        <el-table-column
+          prop="des"
+          label="售前支持详情"
+          width="300">
+        </el-table-column>
+        <el-table-column
+          prop="date"
+          label="创建日期"
+          width="200">
+        </el-table-column>
+        <el-table-column
+          fixed="right"
+          prop="user.name"
+          label="售前人员"
+          width="150">
+        </el-table-column>
+      </el-table>
+    </template>
+
+    <!-- 该客户下的实施送测记录 -->
+    <div class="hr">
+      <div>实施送测记录：</div>
+    </div>
+    <template>
+      <el-table
+        :data="ImplementList"
+        style="width: 100%"
+        :cell-style="setCellColor">
+        <el-table-column
+          prop="testplan"
+          label="实施测试方案"
+          width="400">
+        </el-table-column>
+        <el-table-column
+          prop="report"
+          label="测试结果反馈"
+          width="400">
+        </el-table-column>
+        <el-table-column
+          prop="date"
+          label="实施时间"
+          width="200">
+        </el-table-column>
+        <el-table-column
+          fixed="right"
+          prop="user.name"
+          label="实施人员"
+          width="150">
+        </el-table-column>
+      </el-table>
+    </template>
+
+    <!-- 该客户下的售后支持记录 -->
+    <div class="hr">
+      <div>售后支持记录：</div>
+    </div>
+    <template>
+      <el-table
+        :data="AfterSupportList"
+        style="width: 100%"
+        :cell-style="setCellColor">
+        <el-table-column
+          prop="aftersupport"
+          label="售后支持"
+          width="400">
+        </el-table-column>
+        <el-table-column
+          prop="status"
+          label="支持方式"
+          width="150">
+        </el-table-column>
+        <el-table-column
+          prop="des"
+          label="售后支持详情"
+          width="400">
+        </el-table-column>
+        <el-table-column
+          prop="date"
+          label="服务日期"
+          width="200">
+        </el-table-column>
+        <el-table-column
+          fixed="right"
+          prop="user.name"
+          label="售后人员"
+          width="150">
+        </el-table-column>
+      </el-table>
+    </template>
+
+    <!-- 该客户下的售后维修记录 -->
+    <div class="hr">
+      <div>售后维修记录：</div>
+    </div>
+    <template>
+      <el-table
+        :data="ServiceList"
+        style="width: 100%; margin-bottom: 35px;"
+        :cell-style="setCellColor">
+        <el-table-column
+          prop="problem"
+          label="问题描述"
+          width="300">
+        </el-table-column>
+        <el-table-column
+          prop="other"
+          label="其它事宜"
+          width="350">
+        </el-table-column>
+        <el-table-column
+          prop="result"
+          label="维修结果"
+          width="350">
+        </el-table-column>
+        <el-table-column
+          prop="created_at"
+          label="创建时间"
+          width="200">
+        </el-table-column>
+        <el-table-column
+          fixed="right"
+          prop="user.name"
+          label="维修人员"
           width="150">
         </el-table-column>
       </el-table>
@@ -199,14 +351,22 @@
         // 客户下的拜访记录信息
         RecordList: [],
         // 客户下的商机信息
-        BusinessList: []
+        BusinessList: [],
+        // 客户下的售前支持信息
+        PreSupportList: [],
+        // 客户下的实施送测信息
+        ImplementList: [],
+        // 客户下的售后支持信息
+        AfterSupportList: [],
+        // 客户下的维修服务信息
+        ServiceList: []
       }
     },
     methods: {
       // 统一列颜色
       setCellColor ({ row, column, rowIndex, columnIndex }) {
         if (columnIndex === 0) {
-          return 'color: #3DA2DF; font-weight: bold;'
+          return 'color: #3DA2DF;'
         }
       },
       // 获取客户详细信息
@@ -217,6 +377,10 @@
           this.LiaisonList = data.liaison
           this.RecordList = data.record
           this.BusinessList = data.business
+          this.PreSupportList = data.presupport
+          this.ImplementList = data.implement
+          this.AfterSupportList = data.aftersupport
+          this.ServiceList = data.service
         })
       },
       // 加载数据

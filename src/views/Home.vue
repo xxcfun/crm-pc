@@ -6,7 +6,13 @@
         <img src="../assets/logo.png" height="48" alt="">
         <p>CRM<span>客户关系管理系统</span></p>
       </div>
-      <div class="head-menu">
+      <div class="head-menu" v-if="userInfo.role === 7">
+        <router-link :to="{name: 'PreSupportAdd'}">添加售前支持记录</router-link>
+        <router-link :to="{name: 'ImplementAdd'}">添加实施记录</router-link>
+        <router-link :to="{name: 'AfterSupportAdd'}">添加售后支持记录</router-link>
+        <router-link :to="{name: 'ServiceAdd'}">添加维修记录</router-link>
+      </div>
+      <div class="head-menu" v-else>
         <router-link :to="{name: 'CustomerAdd'}">添加客户</router-link>
         <router-link :to="{name: 'LiaisonAdd'}">添加联系人</router-link>
         <router-link :to="{name: 'RecordAdd'}">添加拜访记录</router-link>

@@ -2,7 +2,7 @@
   <div class="page-record-add">
     <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ name: 'Record' }">客户管理</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ name: 'RecordAll' }">客户管理</el-breadcrumb-item>
       <el-breadcrumb-item>拜访记录详情</el-breadcrumb-item>
       <el-breadcrumb-item>{{ RecordForm.theme }} - {{ RecordForm.customer.name }}</el-breadcrumb-item>
     </el-breadcrumb>

@@ -28,11 +28,11 @@
           <el-option label="100%" :value=5></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="预估金额" prop="money">
-        <el-input v-model="BusinessForm.money" clearable style="width: 50%">
-          <template slot="append">万元</template>
-        </el-input>
-      </el-form-item>
+<!--      <el-form-item label="预估金额" prop="money">-->
+<!--        <el-input v-model="BusinessForm.money" clearable style="width: 50%">-->
+<!--          <template slot="append">万元</template>-->
+<!--        </el-input>-->
+<!--      </el-form-item>-->
       <el-form-item label="备注信息" prop="remarks">
         <el-input type="textarea" v-model="BusinessForm.remarks" clearable></el-input>
       </el-form-item>
@@ -56,7 +56,6 @@
         BusinessForm: {
           name: '',
           winning_rate: '',
-          money: '',
           remarks: ''
         },
         rules: {
@@ -81,7 +80,6 @@
               name: this.BusinessForm.name,
               customer: this.customer_id,
               winning_rate: this.BusinessForm.winning_rate,
-              money: this.BusinessForm.money,
               remarks: this.BusinessForm.remarks
             }).then(({ data }) => {
               this.$message({
@@ -119,7 +117,7 @@
 </script>
 
 <style scoped lang="less">
-  .page-liaison-add {
+  .page-business-add {
     .hr {
       margin: 10px 0 10px 0;
       padding: 20px;
