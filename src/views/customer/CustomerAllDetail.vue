@@ -224,13 +224,18 @@
         style="width: 100%"
         :cell-style="setCellColor">
         <el-table-column
-          prop="testplan"
-          label="实施测试方案"
+          prop="impplan"
+          label="实施方案"
           width="400">
         </el-table-column>
         <el-table-column
+          prop="product"
+          label="产品名称"
+          width="200">
+        </el-table-column>
+        <el-table-column
           prop="report"
-          label="测试结果反馈"
+          label="结果反馈"
           width="400">
         </el-table-column>
         <el-table-column

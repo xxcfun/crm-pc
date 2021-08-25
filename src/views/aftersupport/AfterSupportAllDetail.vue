@@ -32,6 +32,9 @@
       <el-form-item label="创建人">
         <el-input v-model="AfterSupportForm.user.name" readonly></el-input>
       </el-form-item>
+      <el-form-item label="方案文件">
+        <file-open :file="AfterSupportForm.file"/>
+      </el-form-item>
     </el-form>
   </div>
 </template>
@@ -39,9 +42,11 @@
 <script>
   import { AfterSupportApis } from '../../utils/api'
   import axios from 'axios'
+  import FileOpen from '../../components/file/FileOpen'
 
   export default {
     name: 'AfterSupportAllDetail',
+    components: { FileOpen },
     data () {
       return {
         id: '',
@@ -50,7 +55,8 @@
           customer: '',
           status: '',
           des: '',
-          date: ''
+          date: '',
+          file: ''
         }
       }
     },

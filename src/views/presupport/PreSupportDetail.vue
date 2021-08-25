@@ -39,6 +39,9 @@
           <el-form-item label="详情" prop="des">
             <el-input type="textarea" v-model="PreSupportForm.des" clearable></el-input>
           </el-form-item>
+          <el-form-item label="方案文件">
+            <file-open :file="PreSupportForm.file"/>
+          </el-form-item>
 
           <el-form-item>
             <el-button type="primary" @click="submitForm('PreSupportForm')">立即保存</el-button>
@@ -54,9 +57,13 @@
 <script>
   import axios from 'axios'
   import { PreSupportApis } from '../../utils/api'
+  import FileOpen from '../../components/file/FileOpen'
 
   export default {
     name: 'PreSupportDetail',
+    components: {
+      FileOpen
+    },
     data () {
       return {
         id: '',
@@ -69,6 +76,7 @@
           product: '',
           cycle: '',
           des: '',
+          file: ''
         }
       }
     },

@@ -44,48 +44,16 @@
           <el-form-item label="详情" prop="des">
             <el-input type="textarea" v-model="PreSupportForm.des" clearable></el-input>
           </el-form-item>
+          <el-form-item label="文件上传">
+            <file-upload @filePath="getFilePath"/>
+          </el-form-item>
+
           <el-form-item>
             <el-button type="primary" @click="submitForm('PreSupportForm')">立即添加</el-button>
             <el-button @click="resetForm('PreSupportForm')">重置</el-button>
           </el-form-item>
         </el-form>
       </el-col>
-
-<!--      <el-col :span="12">-->
-<!--        &lt;!&ndash; 维修过程 &ndash;&gt;-->
-<!--        <el-card class="box-card">-->
-<!--          <div slot="header" class="clearfix">-->
-<!--            <span>{{ PreSupportForm.state }}-售前方案</span>-->
-<!--            &lt;!&ndash;        <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>&ndash;&gt;-->
-<!--          </div>-->
-<!--          <div class="text item">-->
-<!--            <el-form label-width="40px" v-for="(item, index) in presupportInfoArr">-->
-<!--              <el-form-item label="产品">-->
-<!--                <el-input v-model="item.product" type="textarea"></el-input>-->
-<!--              </el-form-item>-->
-<!--              <el-form-item label="周期">-->
-<!--                <el-input v-model="item.cycle"></el-input>-->
-<!--              </el-form-item>-->
-<!--              <el-form-item label="操作">-->
-<!--                <el-button type="success" @click="confirmUpdate(item.id, index)">确认修改</el-button>-->
-<!--                <el-button type="danger" @click="deleteInfo(item.id)">删除</el-button>-->
-<!--              </el-form-item>-->
-<!--            </el-form>-->
-
-<!--            <el-form label-width="40px">-->
-<!--              <el-form-item label="产品">-->
-<!--                <el-input v-model="newInfo.product" type="textarea"></el-input>-->
-<!--              </el-form-item>-->
-<!--              <el-form-item label="周期">-->
-<!--                <el-input v-model="newInfo.cycle"></el-input>-->
-<!--              </el-form-item>-->
-<!--              <el-form-item label="操作">-->
-<!--                <el-button type="primary" @click="addProcess">新增售前方案</el-button>-->
-<!--              </el-form-item>-->
-<!--            </el-form>-->
-<!--          </div>-->
-<!--        </el-card>-->
-<!--      </el-col>-->
     </el-row>
   </div>
 </template>
@@ -93,9 +61,11 @@
 <script>
   import axios from 'axios'
   import { CustomerApis, PreSupportApis } from '../../utils/api'
+  import FileUpload from '../../components/file/FileUpload'
 
   export default {
     name: 'PreSupportAdd',
+    components: { FileUpload },
     data () {
       return {
         PreSupportForm: {
@@ -105,6 +75,7 @@
           product: '',
           cycle: '',
           des: '',
+          file: ''
         },
         rules: {
           preplan: [
@@ -129,21 +100,14 @@
         restaurants: [],
         state: '',
         timeout: null
-        // // 过程列表
-        // presupportInfoArr: [],
-        // // 过程列表重置为空的数据
-        // newInfoEmpty: {
-        //   product: '',
-        //   cycle: ''
-        // },
-        // // 新增过程列表要保存的数据
-        // newInfo: {
-        //   product: '',
-        //   cycle: ''
-        // },
       }
     },
     methods: {
+      // 父组件接收文件路径
+      getFilePath (data) {
+        this.PreSupportForm.file = data
+        console.log(this.PreSupportForm.file)
+      },
       // 联想搜索下拉框
       loadAll () {
         axios.get(CustomerApis.linkallcustomerUrl).then(({ data }) => {
@@ -180,6 +144,7 @@
               product: this.PreSupportForm.product,
               cycle: this.PreSupportForm.cycle,
               des: this.PreSupportForm.des,
+              file: this.PreSupportForm.file
             }).then(({ data }) => {
               this.$message({
                 message: '添加成功',

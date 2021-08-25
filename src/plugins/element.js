@@ -5,7 +5,7 @@ import {
   Aside, Autocomplete,
   Breadcrumb, BreadcrumbItem,
   Button, Card, Cascader, CheckboxButton, CheckboxGroup, Col,
-  Container, DatePicker, Dialog, Divider, Footer,
+  Container, DatePicker, Dialog, Divider, Drawer, Footer,
   Form,
   FormItem,
   Header,
@@ -13,10 +13,12 @@ import {
   Main,
   Menu,
   MenuItem, Message, MessageBox, Option, PageHeader, Pagination, Radio, RadioGroup, Row, Select,
-  Submenu, Switch, Table, TableColumn, TabPane, Tabs, Tag, Tooltip
+  Submenu, Switch, Table, TableColumn, TabPane, Tabs, Tag, Tooltip, Upload
 } from 'element-ui'
 
 Vue.use(Loading.directive)
+Vue.use(Upload)
+Vue.use(Drawer)
 Vue.use(InputNumber)
 Vue.use(Radio)
 Vue.use(RadioGroup)

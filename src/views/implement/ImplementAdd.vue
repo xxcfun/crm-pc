@@ -15,8 +15,8 @@
       <el-col :span="12">
         <!-- 表单 -->
         <el-form :model="ImplementForm" :rules="rules" ref="ImplementForm" label-width="80px">
-          <el-form-item label="测试方案" prop="testplan">
-            <el-input v-model="ImplementForm.testplan" clearable></el-input>
+          <el-form-item label="实施方案" prop="impplan">
+            <el-input v-model="ImplementForm.impplan" clearable></el-input>
           </el-form-item>
           <el-form-item label="实施日期" prop="date">
             <el-date-picker
@@ -35,8 +35,14 @@
               clearable style="width: 100%"
             ></el-autocomplete>
           </el-form-item>
-          <el-form-item label="测试报告" prop="report">
+          <el-form-item label="产品名称" prop="product">
+            <el-input v-model="ImplementForm.product" clearable></el-input>
+          </el-form-item>
+          <el-form-item label="结果反馈" prop="report">
             <el-input type="textarea" v-model="ImplementForm.report" clearable></el-input>
+          </el-form-item>
+          <el-form-item label="文件上传">
+            <file-upload @filePath="getFilePath"/>
           </el-form-item>
 
           <el-form-item>
@@ -45,42 +51,6 @@
           </el-form-item>
         </el-form>
       </el-col>
-
-<!--      <el-col :span="12">-->
-<!--        &lt;!&ndash; 维修过程 &ndash;&gt;-->
-<!--        <el-card class="box-card">-->
-<!--          <div slot="header" class="clearfix">-->
-<!--            <span>{{ ImplementForm.state }}-测试方案</span>-->
-<!--            &lt;!&ndash;        <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>&ndash;&gt;-->
-<!--          </div>-->
-<!--          <div class="text item">-->
-<!--            <el-form label-width="80px" v-for="(item, index) in implementInfoArr">-->
-<!--              <el-form-item label="测试方案">-->
-<!--                <el-input v-model="item.programme" type="textarea"></el-input>-->
-<!--              </el-form-item>-->
-<!--              <el-form-item label="测试报告">-->
-<!--                <el-input v-model="item.report" type="textarea"></el-input>-->
-<!--              </el-form-item>-->
-<!--              <el-form-item label="操作">-->
-<!--                <el-button type="success" @click="confirmUpdate(item.id, index)">确认修改</el-button>-->
-<!--                <el-button type="danger" @click="deleteInfo(item.id)">删除</el-button>-->
-<!--              </el-form-item>-->
-<!--            </el-form>-->
-
-<!--            <el-form label-width="80px">-->
-<!--              <el-form-item label="测试方案">-->
-<!--                <el-input v-model="newInfo.programme" type="textarea"></el-input>-->
-<!--              </el-form-item>-->
-<!--              <el-form-item label="测试报告">-->
-<!--                <el-input v-model="newInfo.report" type="textarea"></el-input>-->
-<!--              </el-form-item>-->
-<!--              <el-form-item label="操作">-->
-<!--                <el-button type="primary" @click="addProcess">新增测试方案</el-button>-->
-<!--              </el-form-item>-->
-<!--            </el-form>-->
-<!--          </div>-->
-<!--        </el-card>-->
-<!--      </el-col>-->
     </el-row>
   </div>
 </template>
@@ -88,29 +58,30 @@
 <script>
   import axios from 'axios'
   import { CustomerApis, ImplementApis } from '../../utils/api'
+  import FileUpload from '../../components/file/FileUpload'
 
   export default {
     name: 'ImplementAdd',
+    components: { FileUpload },
     data () {
       return {
         ImplementForm: {
-          testplan: '',
+          impplan: '',
           state: '',
+          product: '',
           report: '',
           date: '',
+          file: ''
         },
         rules: {
-          testplan: [
-            { required: true, message: '请输入测试方案', trigger: 'blur' }
+          impplan: [
+            { required: true, message: '请输入实施方案', trigger: 'blur' }
           ],
           date: [
             { required: true, message: '请输入支持时间', trigger: 'blur' }
           ],
           state: [
             { required: true, message: '请输入客户名称', trigger: 'change' }
-          ],
-          report: [
-            { required: true, message: '请输入测试报告', trigger: 'blur' }
           ]
         },
         // 客户id
@@ -134,6 +105,11 @@
       }
     },
     methods: {
+      // 父组件接收文件路径
+      getFilePath (data) {
+        this.ImplementForm.file = data
+        console.log(this.ImplementForm.file)
+      },
       // 联想搜索下拉框
       loadAll () {
         axios.get(CustomerApis.linkallcustomerUrl).then(({ data }) => {
@@ -165,9 +141,11 @@
           if (valid) {
             axios.post(ImplementApis.implementListUrl, {
               customer: this.customer_id,
-              testplan: this.ImplementForm.testplan,
+              impplan: this.ImplementForm.impplan,
+              product: this.ImplementForm.product,
               report: this.ImplementForm.report,
               date: this.ImplementForm.date,
+              file: this.ImplementForm.file
             }).then(({ data }) => {
               this.$message({
                 message: '添加成功',

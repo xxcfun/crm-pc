@@ -37,6 +37,9 @@
       <el-form-item label="详情描述" prop="des">
         <el-input type="textarea" v-model="AfterSupportForm.des" clearable></el-input>
       </el-form-item>
+      <el-form-item label="方案文件">
+        <file-open :file="AfterSupportForm.file"/>
+      </el-form-item>
 
       <el-form-item>
         <el-button type="primary" @click="submitForm('AfterSupportForm')">立即保存</el-button>
@@ -50,9 +53,11 @@
 <script>
   import { AfterSupportApis } from '../../utils/api'
   import axios from 'axios'
+  import FileOpen from '../../components/file/FileOpen'
 
   export default {
     name: 'AfterSupportDetail',
+    components: { FileOpen },
     data () {
       return {
         id: '',
@@ -63,7 +68,8 @@
           },
           status: '',
           des: '',
-          date: ''
+          date: '',
+          file: ''
         }
       }
     },

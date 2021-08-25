@@ -42,6 +42,9 @@
       <el-form-item label="详情描述" prop="des">
         <el-input type="textarea" v-model="AfterSupportForm.des" clearable></el-input>
       </el-form-item>
+      <el-form-item label="文件上传">
+        <file-upload @filePath="getFilePath"/>
+      </el-form-item>
 
       <el-form-item>
         <el-button type="primary" @click="submitForm('AfterSupportForm')">立即添加</el-button>
@@ -54,9 +57,11 @@
 <script>
   import axios from 'axios'
   import { AfterSupportApis, CustomerApis, PreSupportApis } from '../../utils/api'
+  import FileUpload from '../../components/file/FileUpload'
 
   export default {
     name: 'AfterSupportAdd',
+    components: { FileUpload },
     data () {
       return {
         AfterSupportForm: {
@@ -64,7 +69,8 @@
           state: '',
           status: '',
           des: '',
-          date: ''
+          date: '',
+          file: ''
         },
         rules: {
           aftersupport: [
@@ -89,6 +95,11 @@
       }
     },
     methods: {
+      // 父组件接收文件路径
+      getFilePath (data) {
+        this.AfterSupportForm.file = data
+        console.log(this.AfterSupportForm.file)
+      },
       // 联想搜索下拉框
       loadAll () {
         axios.get(CustomerApis.linkallcustomerUrl).then(({ data }) => {
@@ -123,7 +134,8 @@
               aftersupport: this.AfterSupportForm.aftersupport,
               status: this.AfterSupportForm.status,
               des: this.AfterSupportForm.des,
-              date: this.AfterSupportForm.date
+              date: this.AfterSupportForm.date,
+              file: this.AfterSupportForm.file
             }).then(({ data }) => {
               this.$message({
                 message: '添加成功',

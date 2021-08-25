@@ -37,6 +37,9 @@
           <el-form-item label="创建人">
             <el-input v-model="PreSupportForm.user.name" readonly></el-input>
           </el-form-item>
+          <el-form-item label="方案文件">
+            <file-open :file="PreSupportForm.file"/>
+          </el-form-item>
         </el-form>
       </el-col>
     </el-row>
@@ -46,9 +49,11 @@
 <script>
   import axios from 'axios'
   import { PreSupportApis } from '../../utils/api'
+  import FileOpen from '../../components/file/FileOpen'
 
   export default {
     name: 'PreSupportAllDetail',
+    components: { FileOpen },
     data () {
       return {
         id: '',
@@ -59,6 +64,7 @@
           product: '',
           cycle: '',
           des: '',
+          file: ''
         }
       }
     },
