@@ -3,8 +3,8 @@
   <div class="page-implement">
     <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ name: 'ImplementAll' }">实施管理</el-breadcrumb-item>
-      <el-breadcrumb-item>实施列表</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ name: 'ImplementAll' }">售前售后管理</el-breadcrumb-item>
+      <el-breadcrumb-item>实施送测列表</el-breadcrumb-item>
     </el-breadcrumb>
     <el-divider></el-divider>
 

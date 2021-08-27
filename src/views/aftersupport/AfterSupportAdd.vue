@@ -30,8 +30,9 @@
           :fetch-suggestions="querySearchAsync"
           placeholder="请输入客户名称"
           @select="handleSelect"
-          clearable style="width: 100%"
+          clearable style="width: 62%"
         ></el-autocomplete>
+        <el-button style="margin-left: 30px" size="small" type="success" @click="goCreate">没有找到客户？点击新建</el-button>
       </el-form-item>
       <el-form-item label="服务方式" prop="status">
         <el-radio-group v-model="AfterSupportForm.status">
@@ -95,6 +96,10 @@
       }
     },
     methods: {
+      // 跳转创建客户界面
+      goCreate () {
+        this.$router.push({name: 'CustomerCreate'})
+      },
       // 父组件接收文件路径
       getFilePath (data) {
         this.AfterSupportForm.file = data

@@ -2,8 +2,8 @@
   <div class="page-implement-add">
     <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ name: 'ImplementAll' }">实施管理</el-breadcrumb-item>
-      <el-breadcrumb-item>实施记录详情</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ name: 'ImplementAll' }">售前售后管理</el-breadcrumb-item>
+      <el-breadcrumb-item>实施送测记录详情</el-breadcrumb-item>
       <el-breadcrumb-item>{{ ImplementForm.impplan }} - {{ ImplementForm.customer.name }}</el-breadcrumb-item>
     </el-breadcrumb>
     <el-divider></el-divider>

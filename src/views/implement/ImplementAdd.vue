@@ -2,8 +2,8 @@
   <div class="page-implement-add">
     <!-- 面包屑导航 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ name: 'Implement' }">实施管理</el-breadcrumb-item>
-      <el-breadcrumb-item>添加实施记录</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ name: 'Implement' }">售前售后管理</el-breadcrumb-item>
+      <el-breadcrumb-item>添加实施送测记录</el-breadcrumb-item>
     </el-breadcrumb>
     <el-divider></el-divider>
 
@@ -32,8 +32,9 @@
               :fetch-suggestions="querySearchAsync"
               placeholder="请输入客户名称"
               @select="handleSelect"
-              clearable style="width: 100%"
+              clearable style="width: 62%"
             ></el-autocomplete>
+            <el-button style="margin-left: 30px" size="small" type="success" @click="goCreate">没有找到客户？点击新建</el-button>
           </el-form-item>
           <el-form-item label="产品名称" prop="product">
             <el-input v-model="ImplementForm.product" clearable></el-input>
@@ -105,6 +106,10 @@
       }
     },
     methods: {
+      // 跳转创建客户界面
+      goCreate () {
+        this.$router.push({name: 'CustomerCreate'})
+      },
       // 父组件接收文件路径
       getFilePath (data) {
         this.ImplementForm.file = data

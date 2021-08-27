@@ -48,6 +48,13 @@ import ImplementAllDetail from '../views/implement/ImplementAllDetail'
 import ImplementAll from '../views/implement/ImplementAll'
 import PreSupportAllDetail from '../views/presupport/PreSupportAllDetail'
 import PreSupportAll from '../views/presupport/PreSupportAll'
+import CustomerCreate from '../views/customer/CustomerCreate'
+
+const originalPush = VueRouter.prototype.push
+
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 
 Vue.use(VueRouter)
 
@@ -102,6 +109,14 @@ const routes = [
         component: CustomerAdd,
         meta: {
           title: 'CRM-添加客户'
+        }
+      },
+      {
+        path: '/customer/create',
+        name: 'CustomerCreate',
+        component: CustomerCreate,
+        meta: {
+          title: 'CRM-创建客户'
         }
       },
       {

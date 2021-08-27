@@ -24,6 +24,8 @@ const CustomerApis = {
   // customerEditUrl: apiHost + '/customer/customer/#{id}/',
   // customerDeleteUrl: apiHost + '/customer/customer/#{id}/',
   // customerCreateUrl: apiHost + '/customer/customer/'
+  // 后端人员新建客户
+  customerCreateUrl: apiHost + '/customer/customercreate/'
 }
 /* 联系人相关接口 */
 const LiaisonApis = {
