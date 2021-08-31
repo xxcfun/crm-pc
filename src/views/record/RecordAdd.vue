@@ -70,7 +70,7 @@
             { required: true, message: '请输入拜访主题', trigger: 'blur' }
           ],
           state: [
-            { required: true, message: '请输入客户名称', trigger: 'blur' }
+            { required: true, message: '请输入客户名称', trigger: 'change' }
           ],
           status: [
             { required: true, message: '请选择拜访方式', trigger: 'change' }

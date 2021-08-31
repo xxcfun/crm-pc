@@ -1,9 +1,9 @@
 /* 存放项目中的所有地址 */
 
 // 生产环境
-// const apiHost = 'http://47.104.3.183/api'
+const apiHost = 'http://47.104.3.183/api'
 // 开发环境
-const apiHost = 'http://localhost:8080/api'
+// const apiHost = 'http://localhost:8080/api'
 
 /* 用户相关接口 */
 const AccountApis = {

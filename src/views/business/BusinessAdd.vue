@@ -76,7 +76,7 @@
             { required: true, message: '请输入商机名称', trigger: 'blur' }
           ],
           state: [
-            { required: true, message: '请输入客户名称' }
+            { required: true, message: '请输入客户名称', trigger: 'change' }
           ],
           winning_rate: [
             { required: true, message: '请选择商机赢单率', trigger: 'change' }

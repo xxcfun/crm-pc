@@ -18,6 +18,15 @@
           ></el-option>
         </el-select>
       </el-form-item>
+      <el-form-item label="周" prop="week">
+        <el-date-picker
+          v-model="searchForm.week"
+          type="week"
+          format="yyyy 第 WW 周"
+          placeholder="选择周"
+          value-format="yyyy-MM-dd">
+        </el-date-picker>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="onSubmit">搜索</el-button>
         <el-button icon="el-icon-circle-close" @click="resetForm('searchForm')">重置</el-button>
@@ -224,7 +233,8 @@
       return {
         // 搜索数据
         searchForm: {
-          user: ''
+          user: '',
+          week: ''
         },
         // 是否可以清除
         clearable: true,
@@ -271,44 +281,52 @@
         }
       },
       // 获取一周工作数据
+      // 客户数据
       getCustomerList () {
         this.loading = true
         axios.get(DataApis.weekCustomerUrl, {
           params: {
-            username: this.searchForm.user
+            username: this.searchForm.user,
+            week: this.searchForm.week
           }
         }).then(({ data }) => {
           this.CustomerList = data
           this.loading = false
         })
       },
+      // 联系人数据
       getLiaisonList () {
         this.loading = true
         axios.get(DataApis.weekLiaisonUrl, {
           params: {
-            username: this.searchForm.user
+            username: this.searchForm.user,
+            week: this.searchForm.week
           }
         }).then(({ data }) => {
           this.LiaisonList = data
           this.loading = false
         })
       },
+      // 拜访记录数据
       getRecordList () {
         this.loading = true
         axios.get(DataApis.weekRecordUrl, {
           params: {
-            username: this.searchForm.user
+            username: this.searchForm.user,
+            week: this.searchForm.week
           }
         }).then(({ data }) => {
           this.RecordList = data
           this.loading = false
         })
       },
+      // 商机数据
       getBusinessList () {
         this.loading = true
         axios.get(DataApis.weekBusinessUrl, {
           params: {
-            username: this.searchForm.user
+            username: this.searchForm.user,
+            week: this.searchForm.week
           }
         }).then(({ data }) => {
           this.BusinessList = data

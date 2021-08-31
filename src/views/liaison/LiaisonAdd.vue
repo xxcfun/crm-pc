@@ -97,7 +97,7 @@
             { required: true, message: '请输入联系人姓名', trigger: 'blur' }
           ],
           state: [
-            { required: true, message: '请输入客户名称', trigger: 'blur' }
+            { required: true, message: '请输入客户名称', trigger: 'change' }
           ],
           phone: [
             { required: true, message: '请输入联系方式', trigger: 'blur' }

@@ -18,22 +18,22 @@
           prop="user.name"
           label="姓名">
         </el-table-column>
-        <el-table-column
-          prop="yes_record"
-          label="昨日线下拜访">
-        </el-table-column>
-        <el-table-column
-          prop="yes_phone"
-          label="昨日线上拜访">
-        </el-table-column>
-        <el-table-column
-          prop="new_customer"
-          label="新增客户">
-        </el-table-column>
-        <el-table-column
-          prop="new_business"
-          label="新增商机">
-        </el-table-column>
+<!--        <el-table-column-->
+<!--          prop="yes_record"-->
+<!--          label="昨日线下拜访">-->
+<!--        </el-table-column>-->
+<!--        <el-table-column-->
+<!--          prop="yes_phone"-->
+<!--          label="昨日线上拜访">-->
+<!--        </el-table-column>-->
+<!--        <el-table-column-->
+<!--          prop="new_customer"-->
+<!--          label="新增客户">-->
+<!--        </el-table-column>-->
+<!--        <el-table-column-->
+<!--          prop="new_business"-->
+<!--          label="新增商机">-->
+<!--        </el-table-column>-->
         <el-table-column
           prop="week_record"
           label="本周线下拜访">
@@ -45,6 +45,22 @@
         <el-table-column
           prop="week_business"
           label="本周商机数量">
+        </el-table-column>
+        <el-table-column
+          prop="week_customer"
+          label="本周客户数量">
+        </el-table-column>
+        <el-table-column
+          prop="mon_record"
+          label="本月线下拜访">
+        </el-table-column>
+        <el-table-column
+          prop="mon_phone"
+          label="本月线上拜访">
+        </el-table-column>
+        <el-table-column
+          prop="mon_business"
+          label="本月商机数量">
         </el-table-column>
         <el-table-column
           prop="mon_customer"
