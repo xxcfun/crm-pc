@@ -26,6 +26,9 @@
       <el-form-item label="主要事宜">
         <el-input type="textarea" v-model="RecordForm.main" readonly></el-input>
       </el-form-item>
+      <el-form-item label="现用产品">
+        <el-input v-model="RecordForm.product" readonly></el-input>
+      </el-form-item>
       <el-form-item label="后续工作">
         <el-input type="textarea" v-model="RecordForm.next" readonly></el-input>
       </el-form-item>
@@ -53,6 +56,7 @@
           customer: '',
           status: '',
           main: '',
+          product: '',
           next: '',
           user: '',
           remarks: ''

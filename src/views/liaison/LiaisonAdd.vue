@@ -25,9 +25,6 @@
           clearable style="width: 100%"
         ></el-autocomplete>
       </el-form-item>
-      <el-form-item label="联系方式" prop="phone">
-        <el-input v-model="LiaisonForm.phone" clearable></el-input>
-      </el-form-item>
       <el-form-item label="职务" prop="job">
         <el-select v-model="LiaisonForm.job" placeholder="职务" clearable>
           <el-option label="经理" :value=1></el-option>
@@ -43,6 +40,9 @@
           <el-radio :label=1>在职</el-radio>
           <el-radio :label=0>离职</el-radio>
         </el-radio-group>
+      </el-form-item>
+      <el-form-item label="联系电话" prop="phone">
+        <el-input v-model="LiaisonForm.phone" clearable></el-input>
       </el-form-item>
       <el-form-item label="微信" prop="wx">
         <el-input v-model="LiaisonForm.wx" clearable></el-input>
@@ -100,7 +100,7 @@
             { required: true, message: '请输入客户名称', trigger: 'change' }
           ],
           phone: [
-            { required: true, message: '请输入联系方式', trigger: 'blur' }
+            { required: true, message: '请输入联系电话', trigger: 'blur' }
           ],
           job: [
             { required: true, message: '请选择联系人职务', trigger: 'change' }

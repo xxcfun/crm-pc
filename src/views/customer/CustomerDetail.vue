@@ -31,43 +31,59 @@
           <el-radio :label=0>未成交</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="公司网址" prop="website">
-        <el-input v-model="CustomerForm.website" placeholder="请填写公司网址" clearable></el-input>
-      </el-form-item>
-      <el-form-item label="客户规模" prop="scale">
-        <el-select v-model="CustomerForm.scale" placeholder="请选择客户规模" clearable>
-          <el-option label="0~10人" :value=1></el-option>
-          <el-option label="10~50人" :value=2></el-option>
-          <el-option label="50~100人" :value=3></el-option>
-          <el-option label="100~1000人" :value=4></el-option>
-          <el-option label="1000人以上" :value=5></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="客户性质" prop="nature">
-        <el-select v-model="CustomerForm.nature" placeholder="请选择客户性质" clearable>
-          <el-option label="有限责任公司" :value=1></el-option>
-          <el-option label="股份有限公司" :value=2></el-option>
-          <el-option label="国有企业" :value=3></el-option>
-          <el-option label="集体企业" :value=4></el-option>
-          <el-option label="私营企业" :value=5></el-option>
-          <el-option label="个体工商户" :value=6></el-option>
-          <el-option label="合伙企业" :value=7></el-option>
-          <el-option label="联营企业" :value=8></el-option>
-          <el-option label="股份合作制企业" :value=9></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="客户行业" prop="industry">
-        <el-select v-model="CustomerForm.industry" placeholder="请选择客户行业" clearable>
-          <el-option label="机台设备制造商" :value=1></el-option>
-          <el-option label="生产制造型企业" :value=2></el-option>
-          <el-option label="系统集成商" :value=3></el-option>
-          <el-option label="分销商" :value=4></el-option>
-          <el-option label="其它" :value=5></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="备注信息" prop="remarks">
-        <el-input type="textarea" v-model="CustomerForm.remarks" clearable></el-input>
-      </el-form-item>
+
+      <el-divider @click="form = !form">
+        <i v-if="form === false" class="el-icon-arrow-down" style="cursor: pointer">展开更多</i>
+        <i v-else class="el-icon-arrow-up" style="cursor: pointer">点击合并</i>
+      </el-divider>
+
+      <transition name="el-zoom-in-top">
+        <el-form-item v-show="form" label="公司网址" prop="website">
+          <el-input v-model="CustomerForm.website" placeholder="请填写公司网址" clearable></el-input>
+        </el-form-item>
+      </transition>
+      <transition name="el-zoom-in-top">
+        <el-form-item v-show="form" label="客户规模" prop="scale">
+          <el-select v-model="CustomerForm.scale" placeholder="请选择客户规模" clearable>
+            <el-option label="0~10人" :value=1></el-option>
+            <el-option label="10~50人" :value=2></el-option>
+            <el-option label="50~100人" :value=3></el-option>
+            <el-option label="100~1000人" :value=4></el-option>
+            <el-option label="1000人以上" :value=5></el-option>
+          </el-select>
+        </el-form-item>
+      </transition>
+      <transition name="el-zoom-in-top">
+        <el-form-item v-show="form" label="客户性质" prop="nature">
+          <el-select v-model="CustomerForm.nature" placeholder="请选择客户性质" clearable>
+            <el-option label="有限责任公司" :value=1></el-option>
+            <el-option label="股份有限公司" :value=2></el-option>
+            <el-option label="国有企业" :value=3></el-option>
+            <el-option label="集体企业" :value=4></el-option>
+            <el-option label="私营企业" :value=5></el-option>
+            <el-option label="个体工商户" :value=6></el-option>
+            <el-option label="合伙企业" :value=7></el-option>
+            <el-option label="联营企业" :value=8></el-option>
+            <el-option label="股份合作制企业" :value=9></el-option>
+          </el-select>
+        </el-form-item>
+      </transition>
+      <transition name="el-zoom-in-top">
+        <el-form-item v-show="form" label="客户行业" prop="industry">
+          <el-select v-model="CustomerForm.industry" placeholder="请选择客户行业" clearable>
+            <el-option label="机台设备制造商" :value=1></el-option>
+            <el-option label="生产制造型企业" :value=2></el-option>
+            <el-option label="系统集成商" :value=3></el-option>
+            <el-option label="分销商" :value=4></el-option>
+            <el-option label="其它" :value=5></el-option>
+          </el-select>
+        </el-form-item>
+      </transition>
+      <transition name="el-zoom-in-top">
+        <el-form-item v-show="form" label="备注信息" prop="remarks">
+          <el-input type="textarea" v-model="CustomerForm.remarks" clearable></el-input>
+        </el-form-item>
+      </transition>
 
       <el-form-item>
         <el-button type="primary" @click="submitForm('CustomerForm')">立即保存</el-button>
@@ -77,7 +93,7 @@
     </el-form>
 
     <!-- 该客户下的联系人信息 -->
-    <div class="hr">
+    <div class="hr" @click="show_lia = !show_lia">
       <div>联系人信息：</div>
       <div class="add-button">
         <el-button
@@ -86,8 +102,9 @@
           @click="goAddLiaison(id)">添加新的联系人</el-button>
       </div>
     </div>
-    <template>
+    <transition name="el-zoom-in-top">
       <el-table
+        v-show="show_lia"
         :data="LiaisonList"
         style="width: 100%"
         :cell-style="setCellColor">
@@ -98,7 +115,7 @@
         </el-table-column>
         <el-table-column
           prop="phone"
-          label="联系方式"
+          label="联系电话"
           width="">
         </el-table-column>
         <el-table-column
@@ -132,10 +149,10 @@
           </template>
         </el-table-column>
       </el-table>
-    </template>
+    </transition>
 
     <!-- 该客户下的拜访记录信息 -->
-    <div class="hr">
+    <div class="hr" @click="show_rec = !show_rec">
       <div>拜访记录信息：</div>
       <div class="add-button">
         <el-button
@@ -144,8 +161,9 @@
           @click="goAddRecord(id)">添加新的拜访记录</el-button>
       </div>
     </div>
-    <template>
+    <transition name="el-zoom-in-top">
       <el-table
+        v-show="show_rec"
         :data="RecordList"
         style="width: 100%"
         :cell-style="setCellColor">
@@ -165,6 +183,11 @@
           label="主要事宜"
           min-width="200"
           width="600">
+        </el-table-column>
+        <el-table-column
+          prop="product"
+          label="现用产品"
+          width="200">
         </el-table-column>
         <el-table-column
           prop="next"
@@ -193,10 +216,10 @@
           </template>
         </el-table-column>
       </el-table>
-    </template>
+    </transition>
 
     <!-- 该客户下的商机信息 -->
-    <div class="hr">
+    <div class="hr" @click="show_bus = !show_bus">
       <div>商机信息：</div>
       <div class="add-button">
         <el-button
@@ -205,205 +228,210 @@
           @click="goAddBusiness(id)">添加新的商机</el-button>
       </div>
     </div>
-    <template>
+    <transition name="el-zoom-in-top">
       <el-table
-        :data="BusinessList"
-        style="width: 100%"
-        :cell-style="setCellColor">
-        <el-table-column
-          prop="name"
-          label="商机名称"
-          width="">
-        </el-table-column>
-        <el-table-column
-          prop="winning_rate"
-          label="赢单率"
-          width="">
-        </el-table-column>
-        <el-table-column
-          prop="money"
-          label="预估金额（万元）"
-          width="">
-        </el-table-column>
-        <el-table-column
-          prop="created_at"
-          label="创建时间"
-          width="200">
-        </el-table-column>
-        <el-table-column
-          fixed="right"
-          label="操作"
-          width="150">
-          <template slot-scope="scope">
-            <el-button
-              size="mini"
-              type="primary"
-              @click="businessEdit(scope.row.id, scope.row)">编辑</el-button>
-            <el-button
-              size="mini"
-              type="danger"
-              @click="businessDelete(scope.row.id, scope.row)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </template>
+      v-show="show_bus"
+      :data="BusinessList"
+      style="width: 100%"
+      :cell-style="setCellColor">
+      <el-table-column
+        prop="name"
+        label="商机名称"
+        width="">
+      </el-table-column>
+      <el-table-column
+        prop="winning_rate"
+        label="赢单率"
+        width="">
+      </el-table-column>
+      <el-table-column
+        prop="money"
+        label="预估金额（万元）"
+        width="">
+      </el-table-column>
+      <el-table-column
+        prop="created_at"
+        label="创建时间"
+        width="200">
+      </el-table-column>
+      <el-table-column
+        fixed="right"
+        label="操作"
+        width="150">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="primary"
+            @click="businessEdit(scope.row.id, scope.row)">编辑</el-button>
+          <el-button
+            size="mini"
+            type="danger"
+            @click="businessDelete(scope.row.id, scope.row)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    </transition>
 
     <!-- 该客户下的售前支持记录 -->
-    <div class="hr">
+    <div class="hr" @click="show_pre = !show_pre">
       <div>售前支持记录：</div>
     </div>
-    <template>
+    <transition name="el-zoom-in-top">
       <el-table
-        :data="PreSupportList"
-        style="width: 100%"
-        :cell-style="setCellColor">
-        <el-table-column
-          prop="preplan"
-          label="售前方案"
-          width="300">
-        </el-table-column>
-        <el-table-column
-          prop="product"
-          label="产品"
-          width="250">
-        </el-table-column>
-        <el-table-column
-          prop="cycle"
-          label="周期"
-          width="150">
-        </el-table-column>
-        <el-table-column
-          prop="des"
-          label="售前支持详情"
-          width="300">
-        </el-table-column>
-        <el-table-column
-          prop="date"
-          label="创建日期"
-          width="200">
-        </el-table-column>
-        <el-table-column
-          fixed="right"
-          prop="user.name"
-          label="售前人员"
-          width="150">
-        </el-table-column>
-      </el-table>
-    </template>
+      v-show="show_pre"
+      :data="PreSupportList"
+      style="width: 100%"
+      :cell-style="setCellColor">
+      <el-table-column
+        prop="preplan"
+        label="售前方案"
+        width="300">
+      </el-table-column>
+      <el-table-column
+        prop="product"
+        label="产品"
+        width="250">
+      </el-table-column>
+      <el-table-column
+        prop="cycle"
+        label="周期"
+        width="150">
+      </el-table-column>
+      <el-table-column
+        prop="des"
+        label="售前支持详情"
+        width="300">
+      </el-table-column>
+      <el-table-column
+        prop="date"
+        label="创建日期"
+        width="200">
+      </el-table-column>
+      <el-table-column
+        fixed="right"
+        prop="user.name"
+        label="售前人员"
+        width="150">
+      </el-table-column>
+    </el-table>
+    </transition>
 
     <!-- 该客户下的实施送测记录 -->
-    <div class="hr">
+    <div class="hr" @click="show_imp = !show_imp">
       <div>实施送测记录：</div>
     </div>
-    <template>
+    <transition name="el-zoom-in-top">
       <el-table
-        :data="ImplementList"
-        style="width: 100%"
-        :cell-style="setCellColor">
-        <el-table-column
-          prop="impplan"
-          label="实施方案"
-          width="400">
-        </el-table-column>
-        <el-table-column
-          prop="product"
-          label="产品名称"
-          width="200">
-        </el-table-column>
-        <el-table-column
-          prop="report"
-          label="结果反馈"
-          width="400">
-        </el-table-column>
-        <el-table-column
-          prop="date"
-          label="实施时间"
-          width="200">
-        </el-table-column>
-        <el-table-column
-          fixed="right"
-          prop="user.name"
-          label="实施人员"
-          width="150">
-        </el-table-column>
-      </el-table>
-    </template>
+      v-show="show_imp"
+      :data="ImplementList"
+      style="width: 100%"
+      :cell-style="setCellColor">
+      <el-table-column
+        prop="impplan"
+        label="实施方案"
+        width="400">
+      </el-table-column>
+      <el-table-column
+        prop="product"
+        label="产品名称"
+        width="200">
+      </el-table-column>
+      <el-table-column
+        prop="report"
+        label="结果反馈"
+        width="400">
+      </el-table-column>
+      <el-table-column
+        prop="date"
+        label="实施时间"
+        width="200">
+      </el-table-column>
+      <el-table-column
+        fixed="right"
+        prop="user.name"
+        label="实施人员"
+        width="150">
+      </el-table-column>
+    </el-table>
+    </transition>
 
     <!-- 该客户下的售后支持记录 -->
-    <div class="hr">
+    <div class="hr" @click="show_aft = !show_aft">
       <div>售后支持记录：</div>
     </div>
-    <template>
+    <transition name="el-zoom-in-top">
       <el-table
-        :data="AfterSupportList"
-        style="width: 100%"
-        :cell-style="setCellColor">
-        <el-table-column
-          prop="aftersupport"
-          label="售后支持"
-          width="400">
-        </el-table-column>
-        <el-table-column
-          prop="status"
-          label="支持方式"
-          width="150">
-        </el-table-column>
-        <el-table-column
-          prop="des"
-          label="售后支持详情"
-          width="400">
-        </el-table-column>
-        <el-table-column
-          prop="date"
-          label="服务日期"
-          width="200">
-        </el-table-column>
-        <el-table-column
-          fixed="right"
-          prop="user.name"
-          label="售后人员"
-          width="150">
-        </el-table-column>
-      </el-table>
-    </template>
+      v-show="show_aft"
+      :data="AfterSupportList"
+      style="width: 100%"
+      :cell-style="setCellColor">
+      <el-table-column
+        prop="aftersupport"
+        label="售后支持"
+        width="400">
+      </el-table-column>
+      <el-table-column
+        prop="status"
+        label="支持方式"
+        width="150">
+      </el-table-column>
+      <el-table-column
+        prop="des"
+        label="售后支持详情"
+        width="400">
+      </el-table-column>
+      <el-table-column
+        prop="date"
+        label="服务日期"
+        width="200">
+      </el-table-column>
+      <el-table-column
+        fixed="right"
+        prop="user.name"
+        label="售后人员"
+        width="150">
+      </el-table-column>
+    </el-table>
+    </transition>
 
     <!-- 该客户下的售后维修记录 -->
-    <div class="hr">
+    <div class="hr" @click="show_ser = !show_ser">
       <div>售后维修记录：</div>
     </div>
-    <template>
+    <transition name="el-zoom-in-top">
       <el-table
-        :data="ServiceList"
-        style="width: 100%; margin-bottom: 35px;"
-        :cell-style="setCellColor">
-        <el-table-column
-          prop="problem"
-          label="问题描述"
-          width="300">
-        </el-table-column>
-        <el-table-column
-          prop="other"
-          label="其它事宜"
-          width="350">
-        </el-table-column>
-        <el-table-column
-          prop="result"
-          label="维修结果"
-          width="350">
-        </el-table-column>
-        <el-table-column
-          prop="created_at"
-          label="创建时间"
-          width="200">
-        </el-table-column>
-        <el-table-column
-          fixed="right"
-          prop="user.name"
-          label="维修人员"
-          width="150">
-        </el-table-column>
-      </el-table>
-    </template>
+      v-show="show_ser"
+      :data="ServiceList"
+      style="width: 100%;"
+      :cell-style="setCellColor">
+      <el-table-column
+        prop="problem"
+        label="问题描述"
+        width="300">
+      </el-table-column>
+      <el-table-column
+        prop="other"
+        label="其它事宜"
+        width="350">
+      </el-table-column>
+      <el-table-column
+        prop="result"
+        label="维修结果"
+        width="350">
+      </el-table-column>
+      <el-table-column
+        prop="created_at"
+        label="创建时间"
+        width="200">
+      </el-table-column>
+      <el-table-column
+        fixed="right"
+        prop="user.name"
+        label="维修人员"
+        width="150">
+      </el-table-column>
+    </el-table>
+    </transition>
   </div>
 </template>
 
@@ -440,7 +468,16 @@
         // 客户下的售后支持信息
         AfterSupportList: [],
         // 客户下的维修服务信息
-        ServiceList: []
+        ServiceList: [],
+        // 显示控制
+        form: false,
+        show_lia: false,
+        show_rec: false,
+        show_bus: false,
+        show_pre: false,
+        show_imp: false,
+        show_aft: false,
+        show_ser: false
       }
     },
     methods: {
@@ -609,6 +646,8 @@
 
 <style scoped lang="less">
   .page-customer-detail {
+    margin-bottom: 35px;
+
     .hr {
       margin: 10px 0 10px 0;
       padding: 20px;
@@ -617,6 +656,10 @@
       background-color: #ffffff;
       display: flex;
       justify-content: space-between;
+      cursor: pointer;
+    }
+    .hr:hover {
+      background-image: linear-gradient(#eef4f8, #ffffff);
     }
   }
 </style>

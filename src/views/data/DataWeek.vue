@@ -100,7 +100,7 @@
         </el-table-column>
         <el-table-column
           prop="phone"
-          label="联系方式"
+          label="联系电话"
           width="150">
         </el-table-column>
         <el-table-column
@@ -155,12 +155,19 @@
         <el-table-column
           prop="main"
           label="主要事宜"
-          width="500">
+          min-width="200"
+          width="600">
+        </el-table-column>
+        <el-table-column
+          prop="product"
+          label="现用产品"
+          width="200">
         </el-table-column>
         <el-table-column
           prop="next"
           label="后续工作安排"
-          width="500">
+          min-width="200"
+          width="600">
         </el-table-column>
         <el-table-column
           prop="created_at"

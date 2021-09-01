@@ -45,11 +45,12 @@
     </el-form>
 
     <!-- 该客户下的联系人信息 -->
-    <div class="hr">
+    <div class="hr" @click="show_lia = !show_lia">
       <div>联系人信息：</div>
     </div>
-    <template>
+    <transition name="el-zoom-in-top">
       <el-table
+        v-show="show_lia"
         :data="LiaisonList"
         style="width: 100%"
         :cell-style="setCellColor">
@@ -60,7 +61,7 @@
         </el-table-column>
         <el-table-column
           prop="phone"
-          label="联系方式"
+          label="联系电话"
           width="">
         </el-table-column>
         <el-table-column
@@ -85,14 +86,15 @@
           width="150">
         </el-table-column>
       </el-table>
-    </template>
+    </transition>
 
     <!-- 该客户下的拜访记录信息 -->
-    <div class="hr">
+    <div class="hr" @click="show_rec = !show_rec">
       <div>拜访记录信息：</div>
     </div>
-    <template>
+    <transition name="el-zoom-in-top">
       <el-table
+        v-show="show_rec"
         :data="RecordList"
         style="width: 100%"
         :cell-style="setCellColor">
@@ -114,6 +116,11 @@
           width="600">
         </el-table-column>
         <el-table-column
+          prop="product"
+          label="现用产品"
+          width="200">
+        </el-table-column>
+        <el-table-column
           prop="next"
           label="后续工作安排"
           min-width="200"
@@ -131,14 +138,15 @@
           width="150">
         </el-table-column>
       </el-table>
-    </template>
+    </transition>
 
     <!-- 该客户下的商机信息 -->
-    <div class="hr">
+    <div class="hr" @click="show_bus = !show_bus">
       <div>商机信息：</div>
     </div>
-    <template>
+    <transition name="el-zoom-in-top">
       <el-table
+        v-show="show_bus"
         :data="BusinessList"
         style="width: 100%"
         :cell-style="setCellColor">
@@ -169,14 +177,15 @@
           width="150">
         </el-table-column>
       </el-table>
-    </template>
+    </transition>
 
     <!-- 该客户下的售前支持记录 -->
-    <div class="hr">
+    <div class="hr" @click="show_pre = !show_pre">
       <div>售前支持记录：</div>
     </div>
-    <template>
+    <transition name="el-zoom-in-top">
       <el-table
+        v-show="show_pre"
         :data="PreSupportList"
         style="width: 100%"
         :cell-style="setCellColor">
@@ -212,14 +221,15 @@
           width="150">
         </el-table-column>
       </el-table>
-    </template>
+    </transition>
 
     <!-- 该客户下的实施送测记录 -->
-    <div class="hr">
+    <div class="hr" @click="show_imp = !show_imp">
       <div>实施送测记录：</div>
     </div>
-    <template>
+    <transition name="el-zoom-in-top">
       <el-table
+        v-show="show_imp"
         :data="ImplementList"
         style="width: 100%"
         :cell-style="setCellColor">
@@ -250,14 +260,15 @@
           width="150">
         </el-table-column>
       </el-table>
-    </template>
+    </transition>
 
     <!-- 该客户下的售后支持记录 -->
-    <div class="hr">
+    <div class="hr" @click="show_aft = !show_aft">
       <div>售后支持记录：</div>
     </div>
-    <template>
+    <transition name="el-zoom-in-top">
       <el-table
+        v-show="show_aft"
         :data="AfterSupportList"
         style="width: 100%"
         :cell-style="setCellColor">
@@ -288,14 +299,15 @@
           width="150">
         </el-table-column>
       </el-table>
-    </template>
+    </transition>
 
     <!-- 该客户下的售后维修记录 -->
-    <div class="hr">
+    <div class="hr" @click="show_ser = !show_ser">
       <div>售后维修记录：</div>
     </div>
-    <template>
+    <transition name="el-zoom-in-top">
       <el-table
+        v-show="show_ser"
         :data="ServiceList"
         style="width: 100%; margin-bottom: 35px;"
         :cell-style="setCellColor">
@@ -326,8 +338,9 @@
           width="150">
         </el-table-column>
       </el-table>
-    </template>
+    </transition>
   </div>
+
 </template>
 
 <script>
@@ -364,7 +377,15 @@
         // 客户下的售后支持信息
         AfterSupportList: [],
         // 客户下的维修服务信息
-        ServiceList: []
+        ServiceList: [],
+        // 显示控制
+        show_lia: false,
+        show_rec: false,
+        show_bus: false,
+        show_pre: false,
+        show_imp: false,
+        show_aft: false,
+        show_ser: false
       }
     },
     methods: {
@@ -405,6 +426,8 @@
 
 <style scoped lang="less">
   .page-customer-detail {
+    margin-bottom: 35px;
+
     .hr {
       margin: 10px 0 10px 0;
       padding: 20px;
@@ -413,6 +436,10 @@
       background-color: #ffffff;
       display: flex;
       justify-content: space-between;
+      cursor: pointer;
+    }
+    .hr:hover {
+      background-image: linear-gradient(#eef4f8, #ffffff);
     }
   }
 </style>

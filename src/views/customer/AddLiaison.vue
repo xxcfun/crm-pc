@@ -19,7 +19,7 @@
       <el-form-item label="客户名称">
         <el-input v-model="customer_name" readonly></el-input>
       </el-form-item>
-      <el-form-item label="联系方式" prop="phone">
+      <el-form-item label="联系电话" prop="phone">
         <el-input v-model="LiaisonForm.phone" clearable></el-input>
       </el-form-item>
       <el-form-item label="职务" prop="job">
@@ -90,7 +90,7 @@
             { required: true, message: '请输入联系人姓名', trigger: 'blur' }
           ],
           phone: [
-            { required: true, message: '请输入联系方式', trigger: 'blur' }
+            { required: true, message: '请输入联系电话', trigger: 'blur' }
           ],
           job: [
             { required: true, message: '请选择联系人职务', trigger: 'change' }

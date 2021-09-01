@@ -20,14 +20,14 @@
       <el-form-item label="客户名称">
         <el-input v-model="LiaisonForm.customer.name" readonly></el-input>
       </el-form-item>
-      <el-form-item label="联系方式">
-        <el-input v-model="LiaisonForm.phone" readonly></el-input>
-      </el-form-item>
       <el-form-item label="职务">
         <el-input v-model="LiaisonForm.job" readonly></el-input>
       </el-form-item>
       <el-form-item label="是否在职">
         <el-input v-model="LiaisonForm.injob" readonly></el-input>
+      </el-form-item>
+      <el-form-item label="联系电话">
+        <el-input v-model="LiaisonForm.phone" readonly></el-input>
       </el-form-item>
       <el-form-item label="微信">
         <el-input v-model="LiaisonForm.wx" readonly></el-input>

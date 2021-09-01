@@ -66,6 +66,11 @@
           width="600">
         </el-table-column>
         <el-table-column
+          prop="product"
+          label="现用产品"
+          width="200">
+        </el-table-column>
+        <el-table-column
           prop="next"
           label="后续工作安排"
           min-width="200"

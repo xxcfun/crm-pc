@@ -48,7 +48,7 @@
         </el-table-column>
         <el-table-column
           prop="phone"
-          label="联系方式"
+          label="联系电话"
           width="200">
         </el-table-column>
         <el-table-column

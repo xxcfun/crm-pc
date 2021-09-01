@@ -20,9 +20,6 @@
       <el-form-item label="客户名称">
         <el-input v-model="LiaisonForm.customer.name" readonly></el-input>
       </el-form-item>
-      <el-form-item label="联系方式" prop="phone">
-        <el-input v-model="LiaisonForm.phone" clearable></el-input>
-      </el-form-item>
       <el-form-item label="职务" prop="job">
         <el-select v-model="LiaisonForm.job" placeholder="职务" clearable>
           <el-option label="经理" :value=1></el-option>
@@ -38,6 +35,9 @@
           <el-option label="在职" :value=1></el-option>
           <el-option label="离职" :value=0></el-option>
         </el-select>
+      </el-form-item>
+      <el-form-item label="联系电话" prop="phone">
+        <el-input v-model="LiaisonForm.phone" clearable></el-input>
       </el-form-item>
       <el-form-item label="微信" prop="wx">
         <el-input v-model="LiaisonForm.wx" clearable></el-input>

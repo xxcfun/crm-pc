@@ -4,7 +4,7 @@ import CollapseTransition from 'element-ui/lib/transitions/collapse-transition'
 import {
   Aside, Autocomplete,
   Breadcrumb, BreadcrumbItem,
-  Button, Card, Cascader, CheckboxButton, CheckboxGroup, Col,
+  Button, Card, Cascader, CheckboxButton, CheckboxGroup, Col, Collapse, CollapseItem,
   Container, DatePicker, Dialog, Divider, Drawer, Footer,
   Form,
   FormItem,
@@ -16,6 +16,8 @@ import {
   Submenu, Switch, Table, TableColumn, TabPane, Tabs, Tag, Tooltip, Upload
 } from 'element-ui'
 
+Vue.use(CollapseItem)
+Vue.use(Collapse)
 Vue.use(Loading.directive)
 Vue.use(Upload)
 Vue.use(Drawer)

@@ -29,6 +29,9 @@
       <el-form-item label="主要事宜" prop="main">
         <el-input type="textarea" v-model="RecordForm.main" clearable></el-input>
       </el-form-item>
+      <el-form-item label="现用产品" prop="product">
+        <el-input v-model="RecordForm.product" clearable></el-input>
+      </el-form-item>
       <el-form-item label="后续工作" prop="next">
         <el-input type="textarea" v-model="RecordForm.next" clearable></el-input>
       </el-form-item>
@@ -61,6 +64,7 @@
           },
           status: '',
           main: '',
+          product: '',
           next: '',
           remarks: ''
         }
@@ -76,6 +80,7 @@
               theme: this.RecordForm.theme,
               status: this.RecordForm.status,
               main: this.RecordForm.main,
+              product: this.RecordForm.product,
               next: this.RecordForm.next,
               remarks: this.RecordForm.remarks
             }).then(({ data }) => {
