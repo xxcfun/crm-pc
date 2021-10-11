@@ -28,6 +28,7 @@
       // 文件上传相关
       // 上传文件的地址
       postUrl () {
+        // return serverUrl + 'api/backend/files/'
         return serverUrl + 'backend/files/'
       },
       // 上传成功的狗子  获取文件上传的路径

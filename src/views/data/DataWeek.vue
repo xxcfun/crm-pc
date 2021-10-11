@@ -33,6 +33,19 @@
       </el-form-item>
     </el-form>
 
+    <el-card class="box-card">
+      <div slot="header" class="clearfix">
+        <span>数据一览</span>
+      </div>
+      <div class="text item">
+        <div>客户数量：{{ customerNum }}</div>
+        <div>联系人数量：{{ liaisonNum }}</div>
+        <div>线上拜访数量：{{ xsNum }}</div>
+        <div>线下拜访数量：{{ xxNum }}</div>
+        <div>商机数量：{{ businessNum }}</div>
+      </div>
+    </el-card>
+
     <!-- 表格 -->
     <div class="hr">客户总览：</div>
     <template>
@@ -249,6 +262,12 @@
         loading: true,
         // 用户列表
         userList: [],
+        // 数据一览
+        customerNum: 0,
+        liaisonNum: 0,
+        xsNum: 0,
+        xxNum: 0,
+        businessNum: 0,
         // 客户列表
         CustomerList: [],
         // 联系人列表
@@ -298,6 +317,7 @@
           }
         }).then(({ data }) => {
           this.CustomerList = data
+          this.customerNum = data.length
           this.loading = false
         })
       },
@@ -311,6 +331,7 @@
           }
         }).then(({ data }) => {
           this.LiaisonList = data
+          this.liaisonNum = data.length
           this.loading = false
         })
       },
@@ -324,8 +345,29 @@
           }
         }).then(({ data }) => {
           this.RecordList = data
+          // 判断线上线下
+          if (data) {
+            this.recordNum(data)
+          }
           this.loading = false
         })
+      },
+      recordNum (data) {
+        // TODO 这里有报错，后面修复的时候注意一下
+        console.log(data)
+        let xxNum = 0
+        let xsNum = 0
+        for (let i = 0; i <= data.length; i++) {
+          if (data[i].status === "线上") {
+            console.log(data[i].status)
+            xsNum++
+          } else {
+            console.log(data[i].status)
+            xxNum++
+          }
+          this.xxNum = xxNum
+          this.xsNum = xsNum
+        }
       },
       // 商机数据
       getBusinessList () {
@@ -337,6 +379,7 @@
           }
         }).then(({ data }) => {
           this.BusinessList = data
+          this.businessNum = data.length
           this.loading = false
         })
       },
@@ -369,6 +412,29 @@
       color: #3DA2DF;
       font-weight: bold;
       background-color: #ffffff;
+    }
+    // el-cord 模块样式
+    .text {
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .item {
+      margin-bottom: 18px;
+    }
+
+    .clearfix:before,
+    .clearfix:after {
+      display: table;
+      content: "";
+    }
+    .clearfix:after {
+      clear: both
+    }
+
+    .box-card {
+      width: 800px;
     }
   }
 </style>
