@@ -162,6 +162,11 @@
                 authName: '数据一览',
                 path: 'data'
               },
+              {
+                id: 102,
+                authName: '一周工作汇总',
+                path: 'data/own'
+              }
             ]
           },
           {
@@ -357,6 +362,32 @@
         ],
         // 技术
         JSMenuList: [
+          {
+            id: 40,
+            authName: '管理列表',
+            children: [
+              {
+                id: 401,
+                authName: '所有客户',
+                path: 'customer/all'
+              },
+              {
+                id: 402,
+                authName: '所有联系人',
+                path: 'liaison/all'
+              },
+              {
+                id: 403,
+                authName: '所有拜访记录',
+                path: 'record/all'
+              },
+              {
+                id: 404,
+                authName: '所有商机',
+                path: 'business/all'
+              }
+            ]
+          },
           {
             id: 50,
             authName: '售前售后',

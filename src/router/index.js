@@ -49,6 +49,7 @@ import ImplementAll from '../views/implement/ImplementAll'
 import PreSupportAllDetail from '../views/presupport/PreSupportAllDetail'
 import PreSupportAll from '../views/presupport/PreSupportAll'
 import CustomerCreate from '../views/customer/CustomerCreate'
+import DataWeekOwn from '../views/data/DataWeekOwn'
 
 const originalPush = VueRouter.prototype.push
 
@@ -81,6 +82,14 @@ const routes = [
         path: '/data/week',
         name: 'DataWeek',
         component: DataWeek,
+        meta: {
+          title: 'CRM-一周工作汇总'
+        }
+      },
+      {
+        path: '/data/own',
+        name: 'DataWeekOwn',
+        component: DataWeekOwn,
         meta: {
           title: 'CRM-一周工作汇总'
         }
