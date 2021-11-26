@@ -152,7 +152,7 @@
           label="拜访主题"
           width="300">
           <template slot-scope="scope">
-            <a @click="goRecordDetail(scope.row.id)" style="color: #3DA2DF; font-weight: bold;cursor:pointer">{{scope.row.name}}</a>
+            <a @click="goRecordDetail(scope.row.id)" style="color: #3DA2DF; font-weight: bold;cursor:pointer">{{scope.row.theme}}</a>
           </template>
         </el-table-column>
         <el-table-column
